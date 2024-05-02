@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using System.DirectoryServices.ActiveDirectory;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.Security.Cryptography.X509Certificates;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 //https://plus.maths.org/content/magical-mathematics-music
 //https://gomixing.com/mixing/note-to-frequency-chart-mixing-in-key/
@@ -29,6 +30,7 @@ namespace NAudioSynth
     /// </summary>
     public partial class MainWindow : Window
     {
+        //Anything below 2 should be used for bass only
         float C0 = 16.35f, C1 = 32.7f, C2 = 65.41f, C3 = 130.81f, C4 = 261.63f, C5 = 523.25f;
         float C0S = 17.32f, C1S = 34.65f, C2S = 69.30f, C3S = 138.59f, C4S = 277.18f, C5S = 554.37f;
         float D0 = 18.35f, D1 = 36.71f, D2 = 73.42f, D3 = 146.83f, D4 = 293.67f, D5 = 587.33f;
@@ -42,6 +44,7 @@ namespace NAudioSynth
         float A0S = 29.14f, A1S = 58.27f, A2S = 116.54f, A3S = 233.08f, A4S = 466.16f, A5S = 923.33f;
         float B0 = 30.87f , B1 = 61.74f, B2 = 123.47f, B3 = 246.94f, B4 = 493.88f, B5 = 987.77f;
 
+        
 
         public MainWindow()
         {
@@ -61,17 +64,23 @@ namespace NAudioSynth
 
         private ISampleProvider GenNote(float gain, float frequency, float time, SignalGeneratorType type) 
         {
-            return new SignalGenerator()
+            ISampleProvider note = new SignalGenerator()
             {
                 Gain = gain,
                 Frequency = frequency,
                 Type = type
             }.Take(TimeSpan.FromSeconds(time));
+
+            return new AdsrSampleProvider(note.ToMono())
+            {
+                AttackSeconds = 0.3f,
+                ReleaseSeconds = 0.3f
+            };
         }
 
-        private ISampleProvider GenSilence()
+        private ISampleProvider GenSilence(float time)
         {
-            return new SilenceProvider(new WaveFormat()).ToSampleProvider().Take(TimeSpan.FromSeconds(.2));
+            return new SilenceProvider(new WaveFormat()).ToSampleProvider().Take(TimeSpan.FromSeconds(time));
         }
 
         private ISampleProvider CreateMetronome(int length, float gain, float frequency, float time)
@@ -82,7 +91,7 @@ namespace NAudioSynth
             {
                 metronomeConcat[i*2] = GenNote(gain,frequency,time, SignalGeneratorType.Sin);
                 //OffsetSampleProvider
-                metronomeConcat[(i*2)+1] = /*GenNote(gain,frequency,time)*/ GenSilence();
+                metronomeConcat[(i*2)+1] = /*GenNote(gain,frequency,time)*/ GenSilence(.2f);
             }
 
             ISampleProvider metronome = new ConcatenatingSampleProvider(metronomeConcat);
@@ -91,22 +100,22 @@ namespace NAudioSynth
         
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var DLow = new SignalGenerator()
-            {
-                Gain = 0.2,
-                Frequency = 150,
-                Type = SignalGeneratorType.Sin
+            //var DLow = new SignalGenerator()
+            //{
+            //    Gain = 0.2,
+            //    Frequency = 150,
+            //    Type = SignalGeneratorType.Sin
 
-            }.Take(TimeSpan.FromSeconds(.2));
+            //}.Take(TimeSpan.FromSeconds(.2));
 
-            var silence = new SilenceProvider(new WaveFormat()).ToSampleProvider().Take(TimeSpan.FromSeconds(.2));
-            var A = new SignalGenerator()
-            {
-                Gain = 0.2,
-                Frequency = 440,
-                Type = SignalGeneratorType.Sin
-            }
-            .Take(TimeSpan.FromSeconds(.2));
+            //var silence = new SilenceProvider(new WaveFormat()).ToSampleProvider().Take(TimeSpan.FromSeconds(.2));
+            //var A = new SignalGenerator()
+            //{
+            //    Gain = 0.2,
+            //    Frequency = 440,
+            //    Type = SignalGeneratorType.Sin
+            //}
+            //.Take(TimeSpan.FromSeconds(.2));
             //var GSharp = new SignalGenerator()
             //{
             //    Gain = 0.2,
@@ -131,11 +140,40 @@ namespace NAudioSynth
             //var playlist = new ConcatenatingSampleProvider(new[] { DLow,silence, GSharp, silence, D, silence, A, silence, GSharp});
 
             //var concat = DLow.FollowedBy(silence).FollowedBy(DLow);
-            MixingSampleProvider concat = new MixingSampleProvider(DLow.WaveFormat);
-            concat.AddMixerInput(CreateMetronome(5,0.1f,C2,1.5f));
-            concat.AddMixerInput(GenNote(0.1f, E2, 1.5f, SignalGeneratorType.Pink));
-            concat.AddMixerInput(GenNote(0.1f, G2, 1.5f, SignalGeneratorType.Triangle));
+            //concat.AddMixerInput(CreateMetronome(5,0.1f,C4,1.5f));
+            ISampleProvider E = GenNote(0.1f, E4, 1.5f, SignalGeneratorType.Sin);
+            //var Eenveloped = new AdsrSampleProvider(E.ToMono())
+            //{
+            //    AttackSeconds = 0.3f,
+            //    ReleaseSeconds = 0.3f
+            //};
+            ISampleProvider C = GenNote(0.1f, C4, 1.5f, SignalGeneratorType.Sin);
+            //var Cenveloped = new AdsrSampleProvider(C.ToMono())
+            //{
+            //    AttackSeconds = 0.3f,
+            //    ReleaseSeconds = 0.3f
+            //};
+            ISampleProvider G = GenNote(0.1f, G4, 1.5f, SignalGeneratorType.Sin);
+            //var Genveloped = new AdsrSampleProvider(G.ToMono())
+            //{
+            //    AttackSeconds = 0.3f,
+            //    ReleaseSeconds = 0.3f
+            //};
+            MixingSampleProvider concat = new MixingSampleProvider(E.WaveFormat);
+            concat.AddMixerInput(E);
+            concat.AddMixerInput(C);
+            concat.AddMixerInput(G);
 
+            ISampleProvider E2 = GenNote(0.1f, E4, 1.5f, SignalGeneratorType.Sin);
+            ISampleProvider C2 = GenNote(0.1f, C3, 1.5f, SignalGeneratorType.Sin);
+            ISampleProvider G2 = GenNote(0.1f, G4, 1.5f, SignalGeneratorType.Sin);
+
+            MixingSampleProvider concat2 = new MixingSampleProvider(E.WaveFormat);
+            concat2.AddMixerInput(E2);
+            concat2.AddMixerInput(C2);
+            concat2.AddMixerInput(G2);
+
+            var playlist = new ConcatenatingSampleProvider(new[] { concat,concat2 });
             //var concat = CreateMetronome(5, 0.1f,D3,0.2f);
             //https://stackoverflow.com/questions/65726394/playing-waveform-with-naudio-lower-for-each-turn
             //https://github.com/naudio/NAudio/issues/373
@@ -145,7 +183,7 @@ namespace NAudioSynth
 
             using (var wo = new WaveOutEvent())
             {
-                wo.Init(concat);
+                wo.Init(playlist);
                 wo.Play();
                 while (wo.PlaybackState == PlaybackState.Playing)
                 {
