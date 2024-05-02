@@ -25,6 +25,22 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace NAudioSynth
 {
+
+    public struct NoteDetails
+    {
+        public float gain;
+        public float frequency;
+        public float time;
+        public SignalGeneratorType generatorType;
+
+        public NoteDetails(float gain, float frequency, float time, SignalGeneratorType generatorType)
+        {
+            this.gain = gain;
+            this.frequency = frequency;
+            this.time = time;
+            this.generatorType = generatorType;
+        }
+    }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -44,34 +60,50 @@ namespace NAudioSynth
         float A0S = 29.14f, A1S = 58.27f, A2S = 116.54f, A3S = 233.08f, A4S = 466.16f, A5S = 923.33f;
         float B0 = 30.87f , B1 = 61.74f, B2 = 123.47f, B3 = 246.94f, B4 = 493.88f, B5 = 987.77f;
 
-        
+
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private ISampleProvider GenD3()
-        {
-            return new SignalGenerator()
-            {
-                Gain = 30,
-                Frequency = 150,
-                Type = SignalGeneratorType.Sin
-            }
-            .Take(TimeSpan.FromSeconds(.2));
-        }
+        //private ISampleProvider GenD3()
+        //{
+        //    return new SignalGenerator()
+        //    {
+        //        Gain = 30,
+        //        Frequency = 150,
+        //        Type = SignalGeneratorType.Sin
+        //    }
+        //    .Take(TimeSpan.FromSeconds(.2));
+        //}
 
         private ISampleProvider GenNote(float gain, float frequency, float time, SignalGeneratorType type) 
         {
-            ISampleProvider note = new SignalGenerator()
+            ISampleProvider note = new SignalGenerator(44100, 1)
             {
                 Gain = gain,
                 Frequency = frequency,
                 Type = type
             }.Take(TimeSpan.FromSeconds(time));
 
-            return new AdsrSampleProvider(note.ToMono())
+            return new AdsrSampleProvider(note)
+            {
+                AttackSeconds = 0.3f,
+                ReleaseSeconds = 0.3f
+            };
+        }
+
+        private ISampleProvider GenNote(NoteDetails noteDetails)
+        {
+            ISampleProvider note = new SignalGenerator(44100, 1)
+            {
+                Gain = noteDetails.gain,
+                Frequency = noteDetails.frequency,
+                Type = noteDetails.generatorType
+            }.Take(TimeSpan.FromSeconds(noteDetails.time));
+
+            return new AdsrSampleProvider(note)
             {
                 AttackSeconds = 0.3f,
                 ReleaseSeconds = 0.3f
@@ -80,7 +112,7 @@ namespace NAudioSynth
 
         private ISampleProvider GenSilence(float time)
         {
-            return new SilenceProvider(new WaveFormat()).ToSampleProvider().Take(TimeSpan.FromSeconds(time));
+            return new SilenceProvider(WaveFormat.CreateIeeeFloatWaveFormat(44100,1)).ToSampleProvider().Take(TimeSpan.FromSeconds(time));
         }
 
         private ISampleProvider CreateMetronome(int length, float gain, float frequency, float time)
@@ -91,89 +123,36 @@ namespace NAudioSynth
             {
                 metronomeConcat[i*2] = GenNote(gain,frequency,time, SignalGeneratorType.Sin);
                 //OffsetSampleProvider
-                metronomeConcat[(i*2)+1] = /*GenNote(gain,frequency,time)*/ GenSilence(.2f);
+                metronomeConcat[(i*2)+1] = /*GenNote(gain,frequency,time)*/ GenSilence(time);
             }
 
             ISampleProvider metronome = new ConcatenatingSampleProvider(metronomeConcat);
             return metronome;
         }
         
+        private ISampleProvider CombineNotes(NoteDetails[] notes)
+        {
+            MixingSampleProvider combiner = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(44100, 1));
+            foreach (NoteDetails note in notes)
+            {
+                combiner.AddMixerInput(GenNote(note));
+            }
+            return combiner;
+
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //var DLow = new SignalGenerator()
-            //{
-            //    Gain = 0.2,
-            //    Frequency = 150,
-            //    Type = SignalGeneratorType.Sin
+            NoteDetails myC = new NoteDetails(0.1f, C4, 1.5f, SignalGeneratorType.Sin);
+            NoteDetails myE = new NoteDetails(0.1f, E4, 1.5f, SignalGeneratorType.Sin);
+            NoteDetails myE3 = new NoteDetails(0.1f, E3, 1.5f, SignalGeneratorType.Sin);
+            NoteDetails myG = new NoteDetails(0.1f, G4, 1.5f, SignalGeneratorType.Sin);
+            var concat = CombineNotes(new NoteDetails[] { myC, myE, myG });
+            var concat2 = CombineNotes(new NoteDetails[] {myC, myE3, myG});
 
-            //}.Take(TimeSpan.FromSeconds(.2));
+            var silence = new SilenceProvider(WaveFormat.CreateIeeeFloatWaveFormat(44100, 1)).ToSampleProvider().Take(TimeSpan.FromSeconds(0.5));
 
-            //var silence = new SilenceProvider(new WaveFormat()).ToSampleProvider().Take(TimeSpan.FromSeconds(.2));
-            //var A = new SignalGenerator()
-            //{
-            //    Gain = 0.2,
-            //    Frequency = 440,
-            //    Type = SignalGeneratorType.Sin
-            //}
-            //.Take(TimeSpan.FromSeconds(.2));
-            //var GSharp = new SignalGenerator()
-            //{
-            //    Gain = 0.2,
-            //    Frequency = 400,
-            //    Type = SignalGeneratorType.Sin
-            //}
-            //.Take(TimeSpan.FromSeconds(.2));
-            //var C = new SignalGenerator()
-            //{
-            //    Gain = 0.2,
-            //    Frequency = 280,
-            //    Type = SignalGeneratorType.Sin
-            //}
-            //.Take(TimeSpan.FromSeconds(.2));
-            //var D = new SignalGenerator()
-            //{
-            //    Gain = 0.2,
-            //    Frequency = 300,
-            //    Type = SignalGeneratorType.Sin
-            //}
-            //.Take(TimeSpan.FromSeconds(.2));
-            //var playlist = new ConcatenatingSampleProvider(new[] { DLow,silence, GSharp, silence, D, silence, A, silence, GSharp});
-
-            //var concat = DLow.FollowedBy(silence).FollowedBy(DLow);
-            //concat.AddMixerInput(CreateMetronome(5,0.1f,C4,1.5f));
-            ISampleProvider E = GenNote(0.1f, E4, 1.5f, SignalGeneratorType.Sin);
-            //var Eenveloped = new AdsrSampleProvider(E.ToMono())
-            //{
-            //    AttackSeconds = 0.3f,
-            //    ReleaseSeconds = 0.3f
-            //};
-            ISampleProvider C = GenNote(0.1f, C4, 1.5f, SignalGeneratorType.Sin);
-            //var Cenveloped = new AdsrSampleProvider(C.ToMono())
-            //{
-            //    AttackSeconds = 0.3f,
-            //    ReleaseSeconds = 0.3f
-            //};
-            ISampleProvider G = GenNote(0.1f, G4, 1.5f, SignalGeneratorType.Sin);
-            //var Genveloped = new AdsrSampleProvider(G.ToMono())
-            //{
-            //    AttackSeconds = 0.3f,
-            //    ReleaseSeconds = 0.3f
-            //};
-            MixingSampleProvider concat = new MixingSampleProvider(E.WaveFormat);
-            concat.AddMixerInput(E);
-            concat.AddMixerInput(C);
-            concat.AddMixerInput(G);
-
-            ISampleProvider E2 = GenNote(0.1f, E4, 1.5f, SignalGeneratorType.Sin);
-            ISampleProvider C2 = GenNote(0.1f, C3, 1.5f, SignalGeneratorType.Sin);
-            ISampleProvider G2 = GenNote(0.1f, G4, 1.5f, SignalGeneratorType.Sin);
-
-            MixingSampleProvider concat2 = new MixingSampleProvider(E.WaveFormat);
-            concat2.AddMixerInput(E2);
-            concat2.AddMixerInput(C2);
-            concat2.AddMixerInput(G2);
-
-            var playlist = new ConcatenatingSampleProvider(new[] { concat,concat2 });
+            var playlist = new ConcatenatingSampleProvider(new[] { concat,silence, concat2 });
             //var concat = CreateMetronome(5, 0.1f,D3,0.2f);
             //https://stackoverflow.com/questions/65726394/playing-waveform-with-naudio-lower-for-each-turn
             //https://github.com/naudio/NAudio/issues/373
@@ -196,11 +175,12 @@ namespace NAudioSynth
                 //    Thread.Sleep(100);
                 //}
             }
+            //
             //var wout = new WaveOutEvent();
-            //wout.Init(concat);
+            //wout.Init(playlist);
             //string tempFile = "C:\\Users\\m015290m\\Documents\\GitHub\\Synth\\NAudioSynth\\Output\\out.wav";
-            //WaveFormat waveFormat = concat.WaveFormat;
-            //WaveFileWriter.CreateWaveFile(tempFile, concat.ToWaveProvider());
+            //WaveFormat waveFormat = playlist.WaveFormat;
+            //WaveFileWriter.CreateWaveFile(tempFile, playlist.ToWaveProvider());
         }
     }
 }
