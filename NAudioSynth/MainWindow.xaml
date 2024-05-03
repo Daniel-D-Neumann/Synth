@@ -7,7 +7,36 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Play" HorizontalAlignment="Center" Margin="0,184,0,0" VerticalAlignment="Top" Height="57" Width="92" Click="Button_Click"/>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Name="C" Content="C" Grid.Row="0" Background="Red" Click="C_Click"/>
+            <Button Name="D" Content="D" Grid.Row="1" Background="Red"/>
+            <Button Name="E" Content="E" Grid.Row="2" Background="Red"/>
+            <Button Name="F" Content="F" Grid.Row="3" Background="Red"/>
+            <Button Name="G" Content="G" Grid.Row="4" Background="Red"/>
+            <Button Name="A" Content="A" Grid.Row="5" Background="Red"/>
+            <Button Name="B" Content="B" Grid.Row="6" Background="Red"/>
+        </Grid>
+        <Button Grid.Column="1" Content="Play Chords" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Click="Button_Click_1" Height="28" Width="74" Margin="124,0,0,0" />
+        <Button Grid.Column="1" Content="Generate" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Click="Button_Click" Height="28" Width="74" Margin="0,0,124,0" />
+        <Button Grid.Column="1" Content="Play" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Click="Play_Generated" Height="28" Width="74"/>
     </Grid>
 </Window>
