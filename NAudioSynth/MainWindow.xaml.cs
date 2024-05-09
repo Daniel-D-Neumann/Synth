@@ -48,6 +48,7 @@ namespace NAudioSynth
     public partial class MainWindow : Window
     {
         int availableNoteTypes = 7;
+        int availableNoteButtons = 2;
         ISampleProvider currentSong;
         MemoryStream genSong;
 
@@ -68,25 +69,66 @@ namespace NAudioSynth
          {"B0", 30.87f},  {"B1", 61.74f},  {"B2", 123.47f},  {"B3", 246.94f},   {"B4", 493.88f},  {"B5", 987.77f },
     };
         private List<List<bool>> buttonsPressed = new List<List<bool>> { 
-            new List<bool> {false },
-            new List<bool> {false },
-            new List<bool> {false },
-            new List<bool> {false },
-            new List<bool> {false },
-            new List<bool> {false },
-            new List<bool> {false }};
+            new List<bool> {false, false }, //C = 0
+            new List<bool> {false, false }, //D = 1
+            new List<bool> {false, false }, //E = 2
+            new List<bool> {false, false }, //F = 3
+            new List<bool> {false, false }, //G = 4
+            new List<bool> {false, false }, //A = 5
+            new List<bool> {false, false }};//B = 6
 
-        private void C_Click(object sender, RoutedEventArgs e)
+        private void Note_Click(object sender, RoutedEventArgs e)
         {
-            if (buttonsPressed[0][0])
+            Button? srcButton = e.Source as Button;
+
+            //this should be determined from a button property
+            int NoteType = 0;
+            //this should also be determined from a button property
+            int NotePosition = 0;
+
+            if(srcButton != null)
             {
-                C.Background = Brushes.Red;
+                int row = Grid.GetRow(srcButton);
+                int column = Grid.GetColumn(srcButton);
+                switch (row)
+                {
+                    case 0:
+                        NoteType = 0;
+                        break;
+                    case 1:
+                        NoteType = 1;
+                        break;
+                    case 2:
+                        NoteType = 2;
+                        break;
+                    case 3:
+                        NoteType = 3;
+                        break;
+                    case 4:
+                        NoteType = 4;
+                        break;
+                    case 5:
+                        NoteType = 5;
+                        break;
+                    case 6:
+                        NoteType = 6;
+                        break;
+                    default:
+                        break;
+                }
+
+                NotePosition = column/* * pageNo */;
+
+                if (buttonsPressed[NoteType][NotePosition])
+                {
+                    srcButton.Background = Brushes.Red;
+                }
+                else
+                {
+                    srcButton.Background = Brushes.Green;
+                }
+                buttonsPressed[NoteType][NotePosition] = !buttonsPressed[NoteType][NotePosition];
             }
-            else
-            {
-                C.Background = Brushes.Green;
-            }
-            buttonsPressed[0][0] = !buttonsPressed[0][0];
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -206,7 +248,7 @@ namespace NAudioSynth
         {
             List<ISampleProvider> song = new List<ISampleProvider>();
             //TODO REWRITE LOOP WITH HOW MANY BUTTONS
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < availableNoteButtons; i++)
             {
                 List<NoteDetails> notesToPlay = new List<NoteDetails>();
                 for(int j = 0; j < availableNoteTypes; j++)
