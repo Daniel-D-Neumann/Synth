@@ -31,30 +31,30 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Name="C" Content="C" Grid.Row="0" Background="Red" Click="Note_Click"/>
-            <Button Name="C2" Content="C" Grid.Row="0" Grid.Column="1" Background="Red" Click="Note_Click"/>
-            
-            <Button Name="D" Content="D" Grid.Row="1" Background="Red" Click="Note_Click"/>
-            <Button Name="D2" Content="D" Grid.Row="1" Grid.Column="1" Background="Red" Click="Note_Click"/>
-            
-            <Button Name="E" Content="E" Grid.Row="2" Background="Red" Click="Note_Click"/>
-            <Button Name="E2" Content="E" Grid.Row="2" Grid.Column="1" Background="Red" Click="Note_Click"/>
-            
-            <Button Name="F" Content="F" Grid.Row="3" Background="Red" Click="Note_Click"/>
-            <Button Name="F2" Content="F" Grid.Row="3" Grid.Column="1" Background="Red" Click="Note_Click"/>
+            <Button Name="C" Content="C" Grid.Row="0" Background="Red" Click="UpdateNotePressed"/>
+            <Button Name="C2" Content="C" Grid.Row="0" Grid.Column="1" Background="Red" Click="UpdateNotePressed"/>
 
-            <Button Name="G" Content="G" Grid.Row="4" Background="Red" Click="Note_Click"/>
-            <Button Name="G2" Content="G" Grid.Row="4" Grid.Column="1" Background="Red" Click="Note_Click"/>
+            <Button Name="D" Content="D" Grid.Row="1" Background="Red" Click="UpdateNotePressed"/>
+            <Button Name="D2" Content="D" Grid.Row="1" Grid.Column="1" Background="Red" Click="UpdateNotePressed"/>
 
-            <Button Name="A" Content="A" Grid.Row="5" Background="Red" Click="Note_Click"/>
-            <Button Name="A2" Content="A" Grid.Row="5" Grid.Column="1" Background="Red" Click="Note_Click"/>
+            <Button Name="E" Content="E" Grid.Row="2" Background="Red" Click="UpdateNotePressed"/>
+            <Button Name="E2" Content="E" Grid.Row="2" Grid.Column="1" Background="Red" Click="UpdateNotePressed"/>
 
-            <Button Name="B" Content="B" Grid.Row="6" Background="Red" Click="Note_Click"/>
-            <Button Name="B2" Content="B" Grid.Row="6" Grid.Column="1" Background="Red" Click="Note_Click"/>
+            <Button Name="F" Content="F" Grid.Row="3" Background="Red" Click="UpdateNotePressed"/>
+            <Button Name="F2" Content="F" Grid.Row="3" Grid.Column="1" Background="Red" Click="UpdateNotePressed"/>
+
+            <Button Name="G" Content="G" Grid.Row="4" Background="Red" Click="UpdateNotePressed"/>
+            <Button Name="G2" Content="G" Grid.Row="4" Grid.Column="1" Background="Red" Click="UpdateNotePressed"/>
+
+            <Button Name="A" Content="A" Grid.Row="5" Background="Red" Click="UpdateNotePressed"/>
+            <Button Name="A2" Content="A" Grid.Row="5" Grid.Column="1" Background="Red" Click="UpdateNotePressed"/>
+
+            <Button Name="B" Content="B" Grid.Row="6" Background="Red" Click="UpdateNotePressed"/>
+            <Button Name="B2" Content="B" Grid.Row="6" Grid.Column="1" Background="Red" Click="UpdateNotePressed"/>
 
         </Grid>
-        <Button Grid.Column="1" Content="Play Chords" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Click="Button_Click_1" Height="28" Width="74" Margin="124,0,0,0" />
-        <Button Grid.Column="1" Content="Generate" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Click="Button_Click" Height="28" Width="74" Margin="0,0,124,0" />
-        <Button Grid.Column="1" Content="Play" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Click="Play_Generated" Height="28" Width="74"/>
+        <Button Grid.Column="1" Content="Play Chords" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Command="{Binding PlayChordsCommand}" Height="28" Width="74" Margin="124,0,0,0" />
+        <Button Grid.Column="1" Content="Generate" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Command="{Binding GenerateSelectedCommand}" Height="28" Width="74" Margin="0,0,124,0" />
+        <Button Grid.Column="1" Content="Play" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Command="{Binding PlayCommand, UpdateSourceTrigger=PropertyChanged}" Height="28" Width="74"/>
     </Grid>
 </Window>

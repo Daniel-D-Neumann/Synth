@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="NAudioSynth.View.UserControls.UserControl1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NAudioSynth.View.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Name="C" Content="C" Grid.Row="0" Background="Red" Click="Note_Click"/>
+            <Button Name="C2" Content="C" Grid.Row="0" Grid.Column="1" Background="Red" Click="Note_Click"/>
+
+            <Button Name="D" Content="D" Grid.Row="1" Background="Red" Click="Note_Click"/>
+            <Button Name="D2" Content="D" Grid.Row="1" Grid.Column="1" Background="Red" Click="Note_Click"/>
+
+            <Button Name="E" Content="E" Grid.Row="2" Background="Red" Click="Note_Click"/>
+            <Button Name="E2" Content="E" Grid.Row="2" Grid.Column="1" Background="Red" Click="Note_Click"/>
+
+            <Button Name="F" Content="F" Grid.Row="3" Background="Red" Click="Note_Click"/>
+            <Button Name="F2" Content="F" Grid.Row="3" Grid.Column="1" Background="Red" Click="Note_Click"/>
+
+            <Button Name="G" Content="G" Grid.Row="4" Background="Red" Click="Note_Click"/>
+            <Button Name="G2" Content="G" Grid.Row="4" Grid.Column="1" Background="Red" Click="Note_Click"/>
+
+            <Button Name="A" Content="A" Grid.Row="5" Background="Red" Click="Note_Click"/>
+            <Button Name="A2" Content="A" Grid.Row="5" Grid.Column="1" Background="Red" Click="Note_Click"/>
+
+            <Button Name="B" Content="B" Grid.Row="6" Background="Red" Click="Note_Click"/>
+            <Button Name="B2" Content="B" Grid.Row="6" Grid.Column="1" Background="Red" Click="Note_Click"/>
+
+        </Grid>
+    </Grid>
+</UserControl>
