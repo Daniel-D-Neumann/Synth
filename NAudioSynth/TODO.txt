@@ -1,0 +1,9 @@
+expand buttons so there are 16 columns
+remake buttons so that they are more UI friendly, little squares or circles?
+
+look into making multiple pages that automatically generate the same button layout
+//TODO ON NEW WINDOW INCREMENT/DECREMENT PAGE NO AND RESET THE BUTTONS
+        //CAN'T GO ABOVE A MAX PAGE NO
+
+make multiple tabs to be able to switch between different instruments
+make the buttons scroll so that you can switch between different octaves
