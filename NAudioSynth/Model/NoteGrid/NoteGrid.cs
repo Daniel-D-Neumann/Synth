@@ -48,7 +48,7 @@ namespace NAudioSynth.Model.NoteGrid
          {"A0S", 29.14f}, {"A1S", 58.27f}, {"A2S", 116.54f}, {"A3S",  233.08f}, {"A4S", 466.16f}, {"A5S",  923.33f},
          {"B0", 30.87f},  {"B1", 61.74f},  {"B2", 123.47f},  {"B3", 246.94f},   {"B4", 493.88f},  {"B5", 987.77f },
         };
-        private List<List<bool>> buttonsPressed = new List<List<bool>> {
+        private List<List<bool>> buttonsPressedSin = new List<List<bool>> {
             new List<bool> {false, false }, //C = 0
             new List<bool> {false, false }, //D = 1
             new List<bool> {false, false }, //E = 2
@@ -58,19 +58,34 @@ namespace NAudioSynth.Model.NoteGrid
             new List<bool> {false, false }  //B = 6
         };
 
-        public void UpdateButtonsPressed(int row, int column, bool changeTo)
+        private List<List<bool>> buttonsPressedSaw = new List<List<bool>> {
+            new List<bool> {false, false }, //C = 0
+            new List<bool> {false, false }, //D = 1
+            new List<bool> {false, false }, //E = 2
+            new List<bool> {false, false }, //F = 3
+            new List<bool> {false, false }, //G = 4
+            new List<bool> {false, false }, //A = 5
+            new List<bool> {false, false }  //B = 6
+        };
+
+        public void UpdateButtonsPressed(int row, int column, bool changeTo, string type)
         {
-            buttonsPressed[row][column] = changeTo;
+            if(type == "Sin") buttonsPressedSin[row][column] = changeTo;
+            else if (type == "Saw") buttonsPressedSaw[row][column] = changeTo;
         }
-        public void SwitchButtonsPressed(int row, int column)
+        public void SwitchButtonsPressed(int row, int column, string type)
         {
-            buttonsPressed[row][column] = !buttonsPressed[row][column];
+            if (type == "Sin") buttonsPressedSin[row][column] = !buttonsPressedSin[row][column];
+            else if (type =="Saw") buttonsPressedSaw[row][column] |= !buttonsPressedSaw[row][column];
         }
 
-        public bool QueryButtonsPressed(int row, int column)
+        public bool QueryButtonsPressed(int row, int column, string type)
         {
-            return buttonsPressed[row][column];
+            if (type == "Sin") return buttonsPressedSin[row][column];
+            else if (type == "Saw") return buttonsPressedSaw[row][column];
+            return false;
         }
+
 
         public ISampleProvider GenNote(float gain, float frequency, float time, SignalGeneratorType type)
         {

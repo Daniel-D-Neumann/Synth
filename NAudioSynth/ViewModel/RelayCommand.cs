@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace NAudioSynth.ViewModel
 {
-    internal class RelayCommand : ICommand
+    public class RelayCommand : ICommand
     {
         private Action<object>? execute;
         private Action<object,string>? executeParam;

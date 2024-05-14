@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NAudioSynth"
+        xmlns:UserControls="clr-namespace:NAudioSynth.View.UserControls"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -17,7 +18,7 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="1" Grid.Column="1">
+        <!--<Grid Grid.Row="1" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -52,7 +53,18 @@
             <Button Name="B" Content="B" Grid.Row="6" Background="Red" Click="UpdateNotePressed"/>
             <Button Name="B2" Content="B" Grid.Row="6" Grid.Column="1" Background="Red" Click="UpdateNotePressed"/>
 
-        </Grid>
+        </Grid>-->
+        <TabControl Grid.Row="1" Grid.Column="1">
+            <TabItem Header="Sin" Selector.IsSelected="{Binding SinSelected}">
+                <UserControls:SoundBar Grid.Row="1" Grid.Column="1" x:Name ="Sin"/>
+                
+            </TabItem>
+            <TabItem Header="Saw" Selector.IsSelected="{Binding SawSelected}">
+                <UserControls:SoundBar Grid.Row="1" Grid.Column="1" x:Name="Saw"/>
+
+            </TabItem>
+
+        </TabControl>
         <Button Grid.Column="1" Content="Play Chords" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Command="{Binding PlayChordsCommand}" Height="28" Width="74" Margin="124,0,0,0" />
         <Button Grid.Column="1" Content="Generate" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Command="{Binding GenerateSelectedCommand}" Height="28" Width="74" Margin="0,0,124,0" />
         <Button Grid.Column="1" Content="Play" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Command="{Binding PlayCommand, UpdateSourceTrigger=PropertyChanged}" Height="28" Width="74"/>

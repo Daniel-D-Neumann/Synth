@@ -20,8 +20,8 @@ namespace NAudioSynth
     /// </summary>
     public partial class MainWindow : Window
     {
-        ISampleProvider currentSong;
-        MemoryStream genSong;
+        //ISampleProvider currentSong;
+        //MemoryStream genSong;
 
         //TODO ON NEW WINDOW INCREMENT/DECREMENT PAGE NO AND RESET THE BUTTONS
         //CAN'T GO ABOVE A MAX PAGE NO
@@ -61,13 +61,15 @@ namespace NAudioSynth
         //    //WaveFormat waveFormat = playlist.WaveFormat;
         //    //WaveFileWriter.CreateWaveFile(tempFile, playlist.ToWaveProvider());
         //}
-        MainWindowViewModel viewModel;
+        static MainWindowViewModel viewModel = new MainWindowViewModel();
         public MainWindow()
         {
             InitializeComponent();
-            viewModel = new MainWindowViewModel();
+            //viewModel = new MainWindowViewModel();
             DataContext = viewModel;
         }
+
+        public static MainWindowViewModel getViewModel() { return viewModel; }
 
         private void UpdateNotePressed(object sender, RoutedEventArgs e)
         {
