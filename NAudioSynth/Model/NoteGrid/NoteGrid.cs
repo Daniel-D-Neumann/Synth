@@ -49,23 +49,23 @@ namespace NAudioSynth.Model.NoteGrid
          {"B0", 30.87f},  {"B1", 61.74f},  {"B2", 123.47f},  {"B3", 246.94f},   {"B4", 493.88f},  {"B5", 987.77f },
         };
         private List<List<bool>> buttonsPressedSin = new List<List<bool>> {
-            new List<bool> {false, false }, //C = 0
-            new List<bool> {false, false }, //D = 1
-            new List<bool> {false, false }, //E = 2
-            new List<bool> {false, false }, //F = 3
-            new List<bool> {false, false }, //G = 4
-            new List<bool> {false, false }, //A = 5
-            new List<bool> {false, false }  //B = 6
+            new List<bool> {false, false, false, false, false, false, false, false }, //C = 0
+            new List<bool> {false, false, false, false, false, false, false, false }, //D = 1
+            new List<bool> {false, false, false, false, false, false, false, false }, //E = 2
+            new List<bool> {false, false, false, false, false, false, false, false }, //F = 3
+            new List<bool> {false, false, false, false, false, false, false, false }, //G = 4
+            new List<bool> {false, false, false, false, false, false, false, false }, //A = 5
+            new List<bool> {false, false, false, false, false, false, false, false }  //B = 6
         };
 
         private List<List<bool>> buttonsPressedSaw = new List<List<bool>> {
-            new List<bool> {false, false }, //C = 0
-            new List<bool> {false, false }, //D = 1
-            new List<bool> {false, false }, //E = 2
-            new List<bool> {false, false }, //F = 3
-            new List<bool> {false, false }, //G = 4
-            new List<bool> {false, false }, //A = 5
-            new List<bool> {false, false }  //B = 6
+            new List<bool> {false, false, false, false, false, false, false, false }, //C = 0
+            new List<bool> {false, false, false, false, false, false, false, false }, //D = 1
+            new List<bool> {false, false, false, false, false, false, false, false }, //E = 2
+            new List<bool> {false, false, false, false, false, false, false, false }, //F = 3
+            new List<bool> {false, false, false, false, false, false, false, false }, //G = 4
+            new List<bool> {false, false, false, false, false, false, false, false }, //A = 5
+            new List<bool> {false, false, false, false, false, false, false, false }  //B = 6
         };
 
         public void UpdateButtonsPressed(int row, int column, bool changeTo, string type)

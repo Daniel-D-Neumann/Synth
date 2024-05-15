@@ -17,9 +17,9 @@ namespace NAudioSynth.ViewModel
 {
     public class MainWindowViewModel : ViewModel
     {
-        public const int buttonsInRow = 16;
+        public const int buttonsInRow = 8;
         public const int availableNoteTypes = 7;
-        public const int availableNoteButtons = 2;
+        public const int availableNoteButtons = 8;
         public int pageNo = 0;
 
         NoteGrid noteGrid = new NoteGrid();
@@ -31,7 +31,34 @@ namespace NAudioSynth.ViewModel
         public int buttonPressedRow;
         public int buttonPressedColumn;
 
-        private bool sinSelected;
+        #region ButtonBackgroundProperties
+        private SolidColorBrush b00 = Brushes.Red;
+
+        public SolidColorBrush B00
+        {
+            get { return b00; }
+            set 
+            { 
+                b00 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
+        private ViewModel mainViewModel = MainWindow.getViewModel();
+
+        public ViewModel MainViewModel
+        {
+            get { return mainViewModel; }
+            set 
+            { 
+                mainViewModel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool sinSelected = true;
         public bool SinSelected
         {
             get { return sinSelected; }
@@ -82,6 +109,17 @@ namespace NAudioSynth.ViewModel
             }
         }
 
+        public void SelectPage(Button srcButton)
+        {
+            int row = Grid.GetRow(srcButton);
+            int col = Grid.GetColumn(srcButton);
+            pageNo = (3*row) + col;
+
+            //refresh buttons
+            //make button background a Binding
+            //when changing page number query the grid for the page and position
+            //and change those bindings based on the queries
+        }
         private void PlaySelected()
         {
             if(noteGrid.GetCurrentSong()!=null)
@@ -213,6 +251,7 @@ namespace NAudioSynth.ViewModel
                 }
                 else
                 {
+                    //check if no more notes at all
                     song.Add(noteGrid.GenSilence(1.5f));
                 }
                 noteGrid.SetCurrentSong(new ConcatenatingSampleProvider(song));

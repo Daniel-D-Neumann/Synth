@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NAudioSynth"
         xmlns:UserControls="clr-namespace:NAudioSynth.View.UserControls"
+        
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        MinHeight="400" MinWidth="700"
+        >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -18,53 +21,15 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
-        <!--<Grid Grid.Row="1" Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button Name="C" Content="C" Grid.Row="0" Background="Red" Click="UpdateNotePressed"/>
-            <Button Name="C2" Content="C" Grid.Row="0" Grid.Column="1" Background="Red" Click="UpdateNotePressed"/>
-
-            <Button Name="D" Content="D" Grid.Row="1" Background="Red" Click="UpdateNotePressed"/>
-            <Button Name="D2" Content="D" Grid.Row="1" Grid.Column="1" Background="Red" Click="UpdateNotePressed"/>
-
-            <Button Name="E" Content="E" Grid.Row="2" Background="Red" Click="UpdateNotePressed"/>
-            <Button Name="E2" Content="E" Grid.Row="2" Grid.Column="1" Background="Red" Click="UpdateNotePressed"/>
-
-            <Button Name="F" Content="F" Grid.Row="3" Background="Red" Click="UpdateNotePressed"/>
-            <Button Name="F2" Content="F" Grid.Row="3" Grid.Column="1" Background="Red" Click="UpdateNotePressed"/>
-
-            <Button Name="G" Content="G" Grid.Row="4" Background="Red" Click="UpdateNotePressed"/>
-            <Button Name="G2" Content="G" Grid.Row="4" Grid.Column="1" Background="Red" Click="UpdateNotePressed"/>
-
-            <Button Name="A" Content="A" Grid.Row="5" Background="Red" Click="UpdateNotePressed"/>
-            <Button Name="A2" Content="A" Grid.Row="5" Grid.Column="1" Background="Red" Click="UpdateNotePressed"/>
-
-            <Button Name="B" Content="B" Grid.Row="6" Background="Red" Click="UpdateNotePressed"/>
-            <Button Name="B2" Content="B" Grid.Row="6" Grid.Column="1" Background="Red" Click="UpdateNotePressed"/>
-
-        </Grid>-->
         <TabControl Grid.Row="1" Grid.Column="1">
             <TabItem Header="Sin" Selector.IsSelected="{Binding SinSelected}">
-                <UserControls:SoundBar Grid.Row="1" Grid.Column="1" x:Name ="Sin"/>
-                
+                <UserControls:SoundBar Grid.Row="1" Grid.Column="1" x:Name ="Sin" DataContext="{Binding MainViewModel}"/>
             </TabItem>
             <TabItem Header="Saw" Selector.IsSelected="{Binding SawSelected}">
-                <UserControls:SoundBar Grid.Row="1" Grid.Column="1" x:Name="Saw"/>
-
+                <UserControls:SoundBar Grid.Row="1" Grid.Column="1" x:Name="Saw" DataContext="{Binding MainViewModel}"/>
             </TabItem>
-
         </TabControl>
+        <UserControls:PageSelector Grid.Column="2" Grid.Row="1"/>
         <Button Grid.Column="1" Content="Play Chords" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Command="{Binding PlayChordsCommand}" Height="28" Width="74" Margin="124,0,0,0" />
         <Button Grid.Column="1" Content="Generate" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Command="{Binding GenerateSelectedCommand}" Height="28" Width="74" Margin="0,0,124,0" />
         <Button Grid.Column="1" Content="Play" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Command="{Binding PlayCommand, UpdateSourceTrigger=PropertyChanged}" Height="28" Width="74"/>

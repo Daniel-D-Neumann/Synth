@@ -20,27 +20,75 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Name="C" Content="C" Grid.Row="0" Background="Red" Click="Note_Click"/>
-            <Button Name="C2" Content="C" Grid.Row="0" Grid.Column="1" Background="Red" Click="Note_Click"/>
+            <Button Name="C" Content="C" Grid.Row="0" Background="{Binding B00}" Click="Note_Click"/>
+            <Button Name="C2" Content="C" Grid.Row="0" Grid.Column="1" Background="{Binding B01}" Click="Note_Click"/>
+            <Button Name="C3" Content="C" Grid.Row="0" Grid.Column="2" Background="{Binding B02}" Click="Note_Click"/>
+            <Button Name="C4" Content="C" Grid.Row="0" Grid.Column="3" Background="{Binding B03}" Click="Note_Click"/>
+            <Button Name="C5" Content="C" Grid.Row="0" Grid.Column="4" Background="{Binding B04}" Click="Note_Click"/>
+            <Button Name="C6" Content="C" Grid.Row="0" Grid.Column="5" Background="{Binding B05}" Click="Note_Click"/>
+            <Button Name="C7" Content="C" Grid.Row="0" Grid.Column="6" Background="{Binding B06}" Click="Note_Click"/>
+            <Button Name="C8" Content="C" Grid.Row="0" Grid.Column="7" Background="{Binding B07}" Click="Note_Click"/>
 
-            <Button Name="D" Content="D" Grid.Row="1" Background="Red" Click="Note_Click"/>
-            <Button Name="D2" Content="D" Grid.Row="1" Grid.Column="1" Background="Red" Click="Note_Click"/>
+            <Button Name="D" Content="D" Grid.Row="1" Background="{Binding B10}" Click="Note_Click"/>
+            <Button Name="D2" Content="D" Grid.Row="1" Grid.Column="1" Background="{Binding B11}" Click="Note_Click"/>
+            <Button Name="D3" Content="D" Grid.Row="1" Grid.Column="2" Background="{Binding B12}" Click="Note_Click"/>
+            <Button Name="D4" Content="D" Grid.Row="1" Grid.Column="3" Background="{Binding B13}" Click="Note_Click"/>
+            <Button Name="D5" Content="D" Grid.Row="1" Grid.Column="4" Background="{Binding B14}" Click="Note_Click"/>
+            <Button Name="D6" Content="D" Grid.Row="1" Grid.Column="5" Background="{Binding B15}" Click="Note_Click"/>
+            <Button Name="D7" Content="D" Grid.Row="1" Grid.Column="6" Background="{Binding B16}" Click="Note_Click"/>
+            <Button Name="D8" Content="D" Grid.Row="1" Grid.Column="7" Background="{Binding B17}" Click="Note_Click"/>
 
-            <Button Name="E" Content="E" Grid.Row="2" Background="Red" Click="Note_Click"/>
-            <Button Name="E2" Content="E" Grid.Row="2" Grid.Column="1" Background="Red" Click="Note_Click"/>
+            <Button Name="E" Content="E" Grid.Row="2" Background="{Binding B20}" Click="Note_Click"/>
+            <Button Name="E2" Content="E" Grid.Row="2" Grid.Column="1" Background="{Binding B21}" Click="Note_Click"/>
+            <Button Name="E3" Content="E" Grid.Row="2" Grid.Column="2" Background="{Binding B22}" Click="Note_Click"/>
+            <Button Name="E4" Content="E" Grid.Row="2" Grid.Column="3" Background="{Binding B23}" Click="Note_Click"/>
+            <Button Name="E5" Content="E" Grid.Row="2" Grid.Column="4" Background="{Binding B24}" Click="Note_Click"/>
+            <Button Name="E6" Content="E" Grid.Row="2" Grid.Column="5" Background="{Binding B25}" Click="Note_Click"/>
+            <Button Name="E7" Content="E" Grid.Row="2" Grid.Column="6" Background="{Binding B26}" Click="Note_Click"/>
+            <Button Name="E8" Content="E" Grid.Row="2" Grid.Column="7" Background="{Binding B27}" Click="Note_Click"/>
 
-            <Button Name="F" Content="F" Grid.Row="3" Background="Red" Click="Note_Click"/>
-            <Button Name="F2" Content="F" Grid.Row="3" Grid.Column="1" Background="Red" Click="Note_Click"/>
+            <Button Name="F" Content="F" Grid.Row="3" Background="{Binding B30}" Click="Note_Click"/>
+            <Button Name="F2" Content="F" Grid.Row="3" Grid.Column="1" Background="{Binding B31}" Click="Note_Click"/>
+            <Button Name="F3" Content="F" Grid.Row="3" Grid.Column="2" Background="{Binding B32}" Click="Note_Click"/>
+            <Button Name="F4" Content="F" Grid.Row="3" Grid.Column="3" Background="{Binding B33}" Click="Note_Click"/>
+            <Button Name="F5" Content="F" Grid.Row="3" Grid.Column="4" Background="{Binding B34}" Click="Note_Click"/>
+            <Button Name="F6" Content="F" Grid.Row="3" Grid.Column="5" Background="{Binding B35}" Click="Note_Click"/>
+            <Button Name="F7" Content="F" Grid.Row="3" Grid.Column="6" Background="{Binding B36}" Click="Note_Click"/>
+            <Button Name="F8" Content="F" Grid.Row="3" Grid.Column="7" Background="{Binding B37}" Click="Note_Click"/>
 
-            <Button Name="G" Content="G" Grid.Row="4" Background="Red" Click="Note_Click"/>
-            <Button Name="G2" Content="G" Grid.Row="4" Grid.Column="1" Background="Red" Click="Note_Click"/>
+            <Button Name="G" Content="G" Grid.Row="4" Background="{Binding B40}" Click="Note_Click"/>
+            <Button Name="G3" Content="G" Grid.Row="4" Grid.Column="2" Background="{Binding B41}" Click="Note_Click"/>
+            <Button Name="G4" Content="G" Grid.Row="4" Grid.Column="3" Background="{Binding B42}" Click="Note_Click"/>
+            <Button Name="G2" Content="G" Grid.Row="4" Grid.Column="1" Background="{Binding B43}" Click="Note_Click"/>
+            <Button Name="G5" Content="G" Grid.Row="4" Grid.Column="4" Background="{Binding B44}" Click="Note_Click"/>
+            <Button Name="G6" Content="G" Grid.Row="4" Grid.Column="5" Background="{Binding B45}" Click="Note_Click"/>
+            <Button Name="G7" Content="G" Grid.Row="4" Grid.Column="6" Background="{Binding B46}" Click="Note_Click"/>
+            <Button Name="G8" Content="G" Grid.Row="4" Grid.Column="7" Background="{Binding B47}" Click="Note_Click"/>
 
-            <Button Name="A" Content="A" Grid.Row="5" Background="Red" Click="Note_Click"/>
-            <Button Name="A2" Content="A" Grid.Row="5" Grid.Column="1" Background="Red" Click="Note_Click"/>
+            <Button Name="A" Content="A" Grid.Row="5" Background="{Binding B50}" Click="Note_Click"/>
+            <Button Name="A2" Content="A" Grid.Row="5" Grid.Column="1" Background="{Binding B51}" Click="Note_Click"/>
+            <Button Name="A3" Content="A" Grid.Row="5" Grid.Column="2" Background="{Binding B52}" Click="Note_Click"/>
+            <Button Name="A4" Content="A" Grid.Row="5" Grid.Column="3" Background="{Binding B53}" Click="Note_Click"/>
+            <Button Name="A5" Content="A" Grid.Row="5" Grid.Column="4" Background="{Binding B54}" Click="Note_Click"/>
+            <Button Name="A6" Content="A" Grid.Row="5" Grid.Column="5" Background="{Binding B55}" Click="Note_Click"/>
+            <Button Name="A7" Content="A" Grid.Row="5" Grid.Column="6" Background="{Binding B56}" Click="Note_Click"/>
+            <Button Name="A8" Content="A" Grid.Row="5" Grid.Column="7" Background="{Binding B57}" Click="Note_Click"/>
 
-            <Button Name="B" Content="B" Grid.Row="6" Background="Red" Click="Note_Click"/>
-            <Button Name="B2" Content="B" Grid.Row="6" Grid.Column="1" Background="Red" Click="Note_Click"/>
+            <Button Name="B" Content="B" Grid.Row="6" Background="{Binding B60}" Click="Note_Click"/>
+            <Button Name="B3" Content="B" Grid.Row="6" Grid.Column="2" Background="{Binding B61}" Click="Note_Click"/>
+            <Button Name="B4" Content="B" Grid.Row="6" Grid.Column="3" Background="{Binding B62}" Click="Note_Click"/>
+            <Button Name="B5" Content="B" Grid.Row="6" Grid.Column="4" Background="{Binding B63}" Click="Note_Click"/>
+            <Button Name="B6" Content="B" Grid.Row="6" Grid.Column="5" Background="{Binding B64}" Click="Note_Click"/>
+            <Button Name="B7" Content="B" Grid.Row="6" Grid.Column="6" Background="{Binding B65}" Click="Note_Click"/>
+            <Button Name="B8" Content="B" Grid.Row="6" Grid.Column="7" Background="{Binding B66}" Click="Note_Click"/>
+            <Button Name="B2" Content="B" Grid.Row="6" Grid.Column="1" Background="{Binding B67}" Click="Note_Click"/>
 
         </Grid>
     </Grid>

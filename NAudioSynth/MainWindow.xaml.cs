@@ -71,14 +71,17 @@ namespace NAudioSynth
 
         public static MainWindowViewModel getViewModel() { return viewModel; }
 
-        private void UpdateNotePressed(object sender, RoutedEventArgs e)
-        {
-            Button? srcButton = e.Source as Button;
-            if(srcButton != null)
-            {
-                viewModel.NotePressed(srcButton);
-            }
-        }
+
+
+        //private void UpdateNotePressed(object sender, RoutedEventArgs e)
+        //{
+            
+        //    Button? srcButton = e.Source as Button;
+        //    if(srcButton != null)
+        //    {
+        //        viewModel.NotePressed(srcButton);
+        //    }
+        //}
 
         //private ISampleProvider GenNote(float gain, float frequency, float time, SignalGeneratorType type) 
         //{

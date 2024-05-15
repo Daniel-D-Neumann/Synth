@@ -12,32 +12,29 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using NAudioSynth.Model.NoteGrid;
-using NAudioSynth;
 using NAudioSynth.ViewModel;
 
 namespace NAudioSynth.View.UserControls
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for PageSelector.xaml
     /// </summary>
-    public partial class SoundBar : UserControl
+    public partial class PageSelector : UserControl
     {
-
         ViewModel.MainWindowViewModel viewModel;
-        public SoundBar()
+        public PageSelector()
         {
             InitializeComponent();
             viewModel = MainWindow.getViewModel();
             //DataContext = viewModel;
         }
 
-        private void Note_Click(object sender, RoutedEventArgs e)
+        private void Select_Page(object sender, RoutedEventArgs e)
         {
             Button? srcButton = e.Source as Button;
             if (srcButton != null)
             {
-                viewModel.NotePressed(srcButton);
+                viewModel.SelectPage(srcButton);
             }
         }
     }
