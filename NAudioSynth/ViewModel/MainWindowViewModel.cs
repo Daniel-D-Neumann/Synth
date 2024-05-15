@@ -29,9 +29,6 @@ namespace NAudioSynth.ViewModel
         public int buttonPressedColumn;
         public List<List<SolidColorBrush>> buttonColors;
 
-
-
-
         #region ButtonBackgroundProperties
         private SolidColorBrush b00 = new SolidColorBrush(Colors.Red);
 
@@ -664,6 +661,19 @@ namespace NAudioSynth.ViewModel
                 new List<SolidColorBrush>() {B60,B61,B62,B63,B64,B65,B66,B67},
             };
         }
+
+        private string currentPageNo = "Page: 0";
+
+        public string CurrentPageNo
+        {
+            get { return currentPageNo; }
+            set 
+            { 
+                currentPageNo = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private bool sinSelected = true;
         public bool SinSelected

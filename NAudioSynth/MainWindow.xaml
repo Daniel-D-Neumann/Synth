@@ -33,5 +33,6 @@
         <Button Grid.Column="1" Content="Play Chords" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Command="{Binding PlayChordsCommand}" Height="28" Width="74" Margin="124,0,0,0" />
         <Button Grid.Column="1" Content="Generate" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Command="{Binding GenerateSelectedCommand}" Height="28" Width="74" Margin="0,0,124,0" />
         <Button Grid.Column="1" Content="Play" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Command="{Binding PlayCommand, UpdateSourceTrigger=PropertyChanged}" Height="28" Width="74"/>
+        <Label Grid.Column="2" Content="{Binding CurrentPageNo, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="32"/>
     </Grid>
 </Window>
