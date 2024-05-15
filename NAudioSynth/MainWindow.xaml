@@ -23,10 +23,10 @@
         </Grid.ColumnDefinitions>
         <TabControl Grid.Row="1" Grid.Column="1">
             <TabItem Header="Sin" Selector.IsSelected="{Binding SinSelected}">
-                <UserControls:SoundBar Grid.Row="1" Grid.Column="1" x:Name ="Sin" DataContext="{Binding MainViewModel}"/>
+                <UserControls:SoundBar Grid.Row="1" Grid.Column="1" x:Name ="Sin"/>
             </TabItem>
             <TabItem Header="Saw" Selector.IsSelected="{Binding SawSelected}">
-                <UserControls:SoundBar Grid.Row="1" Grid.Column="1" x:Name="Saw" DataContext="{Binding MainViewModel}"/>
+                <UserControls:SoundBar Grid.Row="1" Grid.Column="1" x:Name="Saw"/>
             </TabItem>
         </TabControl>
         <UserControls:PageSelector Grid.Column="2" Grid.Row="1"/>

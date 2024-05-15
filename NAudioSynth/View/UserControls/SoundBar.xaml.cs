@@ -29,7 +29,7 @@ namespace NAudioSynth.View.UserControls
         {
             InitializeComponent();
             viewModel = MainWindow.getViewModel();
-            //DataContext = viewModel;
+            DataContext = viewModel;
         }
 
         private void Note_Click(object sender, RoutedEventArgs e)
