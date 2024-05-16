@@ -29,6 +29,7 @@ namespace NAudioSynth.Model.NoteGrid
         public const int availableNoteTypes = 7;
         public const int availableNoteButtons = 8;
         public const int availablePages = 15;
+        public const int availableOctaves = 6;
         ISampleProvider? currentSong;
         public ISampleProvider GetCurrentSong() { return currentSong; }
         public void SetCurrentSong(ISampleProvider song) { currentSong = song; }
@@ -50,9 +51,9 @@ namespace NAudioSynth.Model.NoteGrid
          {"B0", 30.87f},  {"B1", 61.74f},  {"B2", 123.47f},  {"B3", 246.94f},   {"B4", 493.88f},  {"B5", 987.77f },
         };
 
-        bool[ , ] buttonsPressedSin = new bool[availableNoteTypes,availableNoteButtons * availablePages];
+        bool[ , ] buttonsPressedSin = new bool[availableNoteTypes * availableOctaves,availableNoteButtons * availablePages];
 
-        bool[,] buttonsPressedSaw = new bool[availableNoteTypes, availableNoteButtons * availablePages];
+        bool[,] buttonsPressedSaw = new bool[availableNoteTypes * availableOctaves, availableNoteButtons * availablePages];
 
         public void UpdateButtonsPressed(int row, int column, bool changeTo, string type)
         {

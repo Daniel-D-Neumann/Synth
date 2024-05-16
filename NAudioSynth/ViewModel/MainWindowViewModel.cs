@@ -18,6 +18,7 @@ namespace NAudioSynth.ViewModel
     public class MainWindowViewModel : ViewModel
     {
         public int pageNo = 0;
+        public int octaveNo = 0;
 
         NoteGrid noteGrid = new NoteGrid();
         public RelayCommand PlayCommand => new RelayCommand(execute => PlaySelected(), canExecute => noteGrid.GetCurrentSong() != null);
@@ -674,6 +675,18 @@ namespace NAudioSynth.ViewModel
             }
         }
 
+        private string currentOctaveNo = "Octave: 1";
+
+        public string CurrentOctaveNo
+        {
+            get { return currentOctaveNo; }
+            set 
+            { 
+                currentOctaveNo = value + (octaveNo+1); 
+                OnPropertyChanged();
+            }
+        }
+
 
         private bool sinSelected = true;
         public bool SinSelected
@@ -711,11 +724,11 @@ namespace NAudioSynth.ViewModel
                     bool buttonPressed = false;
                     if(SinSelected)
                     {
-                        buttonPressed = noteGrid.QueryButtonsPressed(i, j+(pageNo*NoteGrid.availableNoteButtons), GetActiveTab());
+                        buttonPressed = noteGrid.QueryButtonsPressed(i+(octaveNo*NoteGrid.availableNoteTypes), j+(pageNo*NoteGrid.availableNoteButtons), GetActiveTab());
                     }
                     else if (sawSelected)
                     {
-                        buttonPressed = noteGrid.QueryButtonsPressed(i, j + (pageNo * NoteGrid.availableNoteButtons), GetActiveTab());
+                        buttonPressed = noteGrid.QueryButtonsPressed(i + (octaveNo * NoteGrid.availableNoteTypes), j + (pageNo * NoteGrid.availableNoteButtons), GetActiveTab());
                     }
 
                     if(buttonPressed)
@@ -739,15 +752,15 @@ namespace NAudioSynth.ViewModel
 
         public void NotePressed(Button srcButton)
         {
-            int NotePosition = 0;
             if (srcButton != null)
             {
                 int row = Grid.GetRow(srcButton);
                 int column = Grid.GetColumn(srcButton);
 
-                NotePosition = column + (NoteGrid.availableNoteButtons * pageNo);
+                int OctavePosition = row + (NoteGrid.availableNoteTypes * octaveNo);
+                int NotePosition = column + (NoteGrid.availableNoteButtons * pageNo);
 
-                if (noteGrid.QueryButtonsPressed(row, NotePosition, GetActiveTab()))
+                if (noteGrid.QueryButtonsPressed(OctavePosition, NotePosition, GetActiveTab()))
                 {
                     buttonColors[row][column].Color = Colors.Red;
                 }
@@ -755,7 +768,7 @@ namespace NAudioSynth.ViewModel
                 {
                     buttonColors[row][column].Color = Colors.Green;
                 }
-                noteGrid.SwitchButtonsPressed(row, NotePosition, GetActiveTab());
+                noteGrid.SwitchButtonsPressed(OctavePosition, NotePosition, GetActiveTab());
             }
         }
 
@@ -770,6 +783,16 @@ namespace NAudioSynth.ViewModel
             //make button background a Binding
             //when changing page number query the grid for the page and position
             //and change those bindings based on the queries
+        }
+
+        public void SelectOctave(Button srcButton)
+        {
+            int row = Grid.GetRow(srcButton);
+            int col = Grid.GetColumn(srcButton);
+            octaveNo = (2*row) + col;
+            CurrentOctaveNo = "Octave: ";
+            UpdateActiveButtons();
+
         }
         private void PlaySelected()
         {
@@ -832,33 +855,33 @@ namespace NAudioSynth.ViewModel
             for (int i = 0; i < NoteGrid.availableNoteButtons * NoteGrid.availablePages; i++)
             {
                 List<NoteDetails> notesToPlay = new List<NoteDetails>();
-                for (int j = 0; j < NoteGrid.availableNoteTypes; j++)
+                for (int j = 0; j < NoteGrid.availableNoteTypes * NoteGrid.availableOctaves; j++)
                 {
                     if (noteGrid.QueryButtonsPressed(j, i, "Sin"))
                     {
                         //TODO PASS J AS PARAM TO SELECT WHICH NOTE E.G. C = 0 USE PAGE TO DETERMINE WHAT OCTAVE
-                        switch (j)
+                        switch (j%NoteGrid.availableNoteTypes)
                         {
                             case (0):
-                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["C4"], .2f, SignalGeneratorType.Sin));
+                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["C"+j/NoteGrid.availableNoteTypes], .2f, SignalGeneratorType.Sin));
                                 break;
                             case (1):
-                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["D4"], .2f, SignalGeneratorType.Sin));
+                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["D" + j / NoteGrid.availableNoteTypes], .2f, SignalGeneratorType.Sin));
                                 break;
                             case (2):
-                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["E4"], .2f, SignalGeneratorType.Sin));
+                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["E" + j / NoteGrid.availableNoteTypes], .2f, SignalGeneratorType.Sin));
                                 break;
                             case (3):
-                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["F4"], .2f, SignalGeneratorType.Sin));
+                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["F" + j / NoteGrid.availableNoteTypes], .2f, SignalGeneratorType.Sin));
                                 break;
                             case (4):
-                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["G4"], .2f, SignalGeneratorType.Sin));
+                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["G" + j / NoteGrid.availableNoteTypes], .2f, SignalGeneratorType.Sin));
                                 break;
                             case (5):
-                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["A4"], .2f, SignalGeneratorType.Sin));
+                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["A" + j / NoteGrid.availableNoteTypes], .2f, SignalGeneratorType.Sin));
                                 break;
                             case (6):
-                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["B4"], .2f, SignalGeneratorType.Sin));
+                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["B" + j / NoteGrid.availableNoteTypes], .2f, SignalGeneratorType.Sin));
                                 break;
                             default:
                                 break;
@@ -867,28 +890,28 @@ namespace NAudioSynth.ViewModel
 
                     if(noteGrid.QueryButtonsPressed(j,i,"Saw"))
                     {
-                        switch (j)
+                        switch (j% NoteGrid.availableNoteTypes)
                         {
                             case (0):
-                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["C4"], .2f, SignalGeneratorType.SawTooth));
+                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["C" + j / NoteGrid.availableNoteTypes], .2f, SignalGeneratorType.SawTooth));
                                 break;
                             case (1):
-                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["D4"], .2f, SignalGeneratorType.SawTooth));
+                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["D" + j / NoteGrid.availableNoteTypes], .2f, SignalGeneratorType.SawTooth));
                                 break;
                             case (2):
-                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["E4"], .2f, SignalGeneratorType.SawTooth));
+                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["E" + j / NoteGrid.availableNoteTypes], .2f, SignalGeneratorType.SawTooth));
                                 break;
                             case (3):
-                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["F4"], .2f, SignalGeneratorType.SawTooth));
+                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["F" + j / NoteGrid.availableNoteTypes], .2f, SignalGeneratorType.SawTooth));
                                 break;
                             case (4):
-                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["G4"], .2f, SignalGeneratorType.SawTooth));
+                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["G" + j / NoteGrid.availableNoteTypes], .2f, SignalGeneratorType.SawTooth));
                                 break;
                             case (5):
-                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["A4"], .2f, SignalGeneratorType.SawTooth));
+                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["A" + j / NoteGrid.availableNoteTypes], .2f, SignalGeneratorType.SawTooth));
                                 break;
                             case (6):
-                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["B4"], .2f, SignalGeneratorType.SawTooth));
+                                notesToPlay.Add(new NoteDetails(0.2f, noteGrid.Notes["B" + j / NoteGrid.availableNoteTypes], .2f, SignalGeneratorType.SawTooth));
                                 break;
                             default:
                                 break;
