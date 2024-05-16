@@ -662,14 +662,14 @@ namespace NAudioSynth.ViewModel
             };
         }
 
-        private string currentPageNo = "Page: 0";
+        private string currentPageNo = "Page: 1";
 
         public string CurrentPageNo
         {
             get { return currentPageNo; }
             set 
             { 
-                currentPageNo = value;
+                currentPageNo = value + (pageNo+1);
                 OnPropertyChanged();
             }
         }
@@ -764,7 +764,7 @@ namespace NAudioSynth.ViewModel
             int row = Grid.GetRow(srcButton);
             int col = Grid.GetColumn(srcButton);
             pageNo = (3*row) + col;
-
+            CurrentPageNo = "Page: ";
             UpdateActiveButtons();
             //refresh buttons
             //make button background a Binding
