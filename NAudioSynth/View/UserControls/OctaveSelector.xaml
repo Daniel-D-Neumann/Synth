@@ -16,12 +16,12 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button Content="1" Click="Select_Octave"/>
-        <Button Content="2" Grid.Column="1" Click="Select_Octave"/>
-        <Button Content="3" Grid.Row="1"  Click="Select_Octave"/>
-        <Button Content="4" Grid.Row="1" Grid.Column="1" Click="Select_Octave"/>
-        <Button Content="5" Grid.Row="2" Click="Select_Octave"/>
-        <Button Content="6" Grid.Column="1" Grid.Row="2" Click="Select_Octave"/>
+        <Button Content="1" Click="Select_Octave" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="2" Grid.Column="1" Click="Select_Octave" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="3" Grid.Row="1"  Click="Select_Octave" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="4" Grid.Row="1" Grid.Column="1" Click="Select_Octave" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="5" Grid.Row="2" Click="Select_Octave" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="6" Grid.Column="1" Grid.Row="2" Click="Select_Octave" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
 
     </Grid>
 </UserControl>

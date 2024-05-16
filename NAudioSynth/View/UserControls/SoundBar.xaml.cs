@@ -37,7 +37,7 @@ namespace NAudioSynth.View.UserControls
             Button? srcButton = e.Source as Button;
             if (srcButton != null)
             {
-                viewModel.NotePressed(srcButton);
+                if(viewModel.NoSongPlaying) viewModel.NotePressed(srcButton);
             }
         }
     }

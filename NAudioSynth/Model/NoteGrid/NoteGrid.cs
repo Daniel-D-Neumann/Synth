@@ -30,6 +30,7 @@ namespace NAudioSynth.Model.NoteGrid
         public const int availableNoteButtons = 8;
         public const int availablePages = 15;
         public const int availableOctaves = 6;
+        public bool songPlaying = false;
         ISampleProvider? currentSong;
         public ISampleProvider GetCurrentSong() { return currentSong; }
         public void SetCurrentSong(ISampleProvider song) { currentSong = song; }

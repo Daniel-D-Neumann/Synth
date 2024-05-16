@@ -19,21 +19,21 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button Content="1" Click="Select_Page"/>
-        <Button Content="2" Grid.Column="1" Click="Select_Page"/>
-        <Button Content="3" Grid.Column="2" Click="Select_Page"/>
-        <Button Content="4" Grid.Row="1" Click="Select_Page"/>
-        <Button Content="5" Grid.Column="1" Grid.Row="1" Click="Select_Page"/>
-        <Button Content="6" Grid.Column="2" Grid.Row="1" Click="Select_Page"/>
-        <Button Content="7" Grid.Row="2" Click="Select_Page"/>
-        <Button Content="8" Grid.Column="1" Grid.Row="2" Click="Select_Page"/>
-        <Button Content="9" Grid.Column="2" Grid.Row="2" Click="Select_Page"/>
-        <Button Content="10" Grid.Row="3" Click="Select_Page"/>
-        <Button Content="11" Grid.Column="1" Grid.Row="3" Click="Select_Page"/>
-        <Button Content="12" Grid.Column="2" Grid.Row="3" Click="Select_Page"/>
-        <Button Content="13" Grid.Row="4" Click="Select_Page"/>
-        <Button Content="14" Grid.Column="1" Grid.Row="4" Click="Select_Page"/>
-        <Button Content="15" Grid.Column="2" Grid.Row="4" Click="Select_Page"/>
+        <Button Content="1" Click="Select_Page" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="2" Grid.Column="1" Click="Select_Page" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="3" Grid.Column="2" Click="Select_Page" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="4" Grid.Row="1" Click="Select_Page" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="5" Grid.Column="1" Grid.Row="1" Click="Select_Page" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="6" Grid.Column="2" Grid.Row="1" Click="Select_Page" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="7" Grid.Row="2" Click="Select_Page" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="8" Grid.Column="1" Grid.Row="2" Click="Select_Page" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="9" Grid.Column="2" Grid.Row="2" Click="Select_Page" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="10" Grid.Row="3" Click="Select_Page" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="11" Grid.Column="1" Grid.Row="3" Click="Select_Page" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="12" Grid.Column="2" Grid.Row="3" Click="Select_Page" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="13" Grid.Row="4" Click="Select_Page" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="14" Grid.Column="1" Grid.Row="4" Click="Select_Page" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="15" Grid.Column="2" Grid.Row="4" Click="Select_Page" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
 
         </Grid>
 </UserControl>

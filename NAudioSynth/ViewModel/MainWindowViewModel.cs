@@ -22,7 +22,7 @@ namespace NAudioSynth.ViewModel
 
         NoteGrid noteGrid = new NoteGrid();
         public RelayCommand PlayCommand => new RelayCommand(execute => PlaySelected(), canExecute => noteGrid.GetCurrentSong() != null);
-        public RelayCommand PlayChordsCommand => new RelayCommand(execute => PlayChords());
+        public RelayCommand PlayChordsCommand => new RelayCommand(execute => PlayChords(), canExecute=> noSongPlaying);
 
         public RelayCommand GenerateSelectedCommand => new RelayCommand(execute => GenerateSelceted());
 
@@ -687,6 +687,18 @@ namespace NAudioSynth.ViewModel
             }
         }
 
+        private bool noSongPlaying = true;
+
+        public bool NoSongPlaying
+        {
+            get { return noSongPlaying; }
+            set 
+            {
+                noSongPlaying = value; 
+                OnPropertyChanged();
+            }
+        }
+
 
         private bool sinSelected = true;
         public bool SinSelected
@@ -796,12 +808,14 @@ namespace NAudioSynth.ViewModel
         }
         private void PlaySelected()
         {
+            //load song on new thread so that UI can still function
             if(noteGrid.GetCurrentSong()!=null)
             {
                 using (var wo = new WaveOutEvent())
                 {
                     wo.Init(noteGrid.GetCurrentSong());
                     noteGrid.ReleaseCurrentSong();
+                    NoSongPlaying = false;
                     wo.Play();
                     while (wo.PlaybackState == PlaybackState.Playing)
                     {
