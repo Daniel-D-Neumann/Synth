@@ -11,6 +11,8 @@ namespace NAudioSynth.Model.NoteGrid
 {
     public struct NoteDetails
     {
+        public bool active = false;
+        public bool connected = false;
         public float gain;
         public float frequency;
         public float time;
@@ -32,6 +34,7 @@ namespace NAudioSynth.Model.NoteGrid
         public const int availableOctaves = 6;
         public const int totalNotes = availableNoteButtons * availablePages;
         public const int totalNoteTypes = availableNoteTypes * availableOctaves;
+        public const float timePerNote = 0.2f;
         public bool songPlaying = false;
         ISampleProvider? currentSong;
         public ISampleProvider GetCurrentSong() { return currentSong; }
@@ -54,28 +57,41 @@ namespace NAudioSynth.Model.NoteGrid
          {"B0", 30.87f},  {"B1", 61.74f},  {"B2", 123.47f},  {"B3", 246.94f},   {"B4", 493.88f},  {"B5", 987.77f },
         };
 
-        bool[ , ] buttonsPressedSin = new bool[availableNoteTypes * availableOctaves,availableNoteButtons * availablePages];
 
-        bool[,] buttonsPressedSaw = new bool[availableNoteTypes * availableOctaves, availableNoteButtons * availablePages];
+        NoteDetails[,] buttonsPressedSin = new NoteDetails[totalNoteTypes, totalNotes];
+
+        NoteDetails[,] buttonsPressedSaw = new NoteDetails[totalNoteTypes, totalNotes];
 
         public void UpdateButtonsPressed(int row, int column, bool changeTo, string type)
         {
-            if(type == "Sin") buttonsPressedSin[row,column] = changeTo;
-            else if (type == "Saw") buttonsPressedSaw[row,column] = changeTo;
+            if(type == "Sin") buttonsPressedSin[row,column].active = changeTo;
+            else if (type == "Saw") buttonsPressedSaw[row,column].active = changeTo;
         }
         public void SwitchButtonsPressed(int row, int column, string type)
         {
-            if (type == "Sin") buttonsPressedSin[row,column] = !buttonsPressedSin[row,column];
-            else if (type =="Saw") buttonsPressedSaw[row,column] = !buttonsPressedSaw[row, column];
+            if (type == "Sin") buttonsPressedSin[row, column].active = !buttonsPressedSin[row, column].active;
+            else if (type =="Saw") buttonsPressedSaw[row, column].active = !buttonsPressedSaw[row, column].active;
+        }
+
+        public void SwitchConnectedProperty(int row, int column, string type)
+        {
+            if (type == "Sin") buttonsPressedSin[row, column].connected = !buttonsPressedSin[row, column].connected;
+            else if (type == "Saw") buttonsPressedSaw[row, column].connected = !buttonsPressedSaw[row, column].connected;
         }
 
         public bool QueryButtonsPressed(int row, int column, string type)
         {
-            if (type == "Sin") return buttonsPressedSin[row,column];
-            else if (type == "Saw") return buttonsPressedSaw[row,column];
+            if (type == "Sin") return buttonsPressedSin[row, column].active;
+            else if (type == "Saw") return buttonsPressedSaw[row, column].active;
             return false;
         }
 
+        public bool QueryConnected(int row, int column, string type)
+        {
+            if (type == "Sin") return buttonsPressedSin[row, column].connected;
+            else if (type == "Saw") return buttonsPressedSaw[row, column].connected;
+            return false;
+        }
 
         public ISampleProvider GenNote(float gain, float frequency, float time, SignalGeneratorType type)
         {
@@ -147,6 +163,31 @@ namespace NAudioSynth.Model.NoteGrid
                 combiner.AddMixerInput(GenNote(note));
             }
             return combiner;
+        }
+
+        public ISampleProvider CombineTracks(List<ISampleProvider> tracks)
+        {
+            MixingSampleProvider combiner = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(44100,1));
+            foreach (ISampleProvider track in tracks)
+            {
+                combiner.AddMixerInput(track);
+            }
+            return combiner;
+        }
+
+        public ISampleProvider ConcatenateNotes(List<NoteDetails> notes)
+        {
+            ISampleProvider[] convertedNotes = new ISampleProvider[notes.Count];
+            for (int i = 0; i < notes.Count; i++)
+            {
+                convertedNotes[i] = GenNote(notes[i]);
+            }
+            return new ConcatenatingSampleProvider(convertedNotes);
+        }
+
+        public ISampleProvider ConcatenateNotes(List<ISampleProvider> notes)
+        {
+            return new ConcatenatingSampleProvider(notes);
         }
     }
 }

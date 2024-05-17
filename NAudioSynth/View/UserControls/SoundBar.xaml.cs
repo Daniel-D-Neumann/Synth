@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using NAudioSynth.Model.NoteGrid;
 using NAudioSynth;
 using NAudioSynth.ViewModel;
+using System.Windows.Controls.Primitives;
 
 namespace NAudioSynth.View.UserControls
 {
@@ -37,7 +38,28 @@ namespace NAudioSynth.View.UserControls
             Button? srcButton = e.Source as Button;
             if (srcButton != null)
             {
-                if(viewModel.NoSongPlaying) viewModel.NotePressed(srcButton);
+                if (viewModel.NoSongPlaying) viewModel.NotePressed(srcButton);
+            }
+        }
+
+        private void MenuItem_Checked(object sender, RoutedEventArgs e)
+        {
+            MenuItem? item = sender as MenuItem;
+            if (item != null)
+            {
+                ContextMenu? contextMenu = item.Parent as ContextMenu;
+                if (contextMenu != null)
+                {
+                    Popup? popup = contextMenu.Parent as Popup;
+                    if (popup != null)
+                    {
+                        Button? button = popup.PlacementTarget as Button;
+                        if (button != null)
+                        {
+                            if (viewModel.NoSongPlaying) viewModel.ConnectedPressed(button);
+                        }
+                    }
+                }
             }
         }
     }

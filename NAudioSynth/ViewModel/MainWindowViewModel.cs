@@ -24,7 +24,7 @@ namespace NAudioSynth.ViewModel
         public RelayCommand PlayCommand => new RelayCommand(execute => PlaySelected(), canExecute => noteGrid.GetCurrentSong() != null);
         public RelayCommand PlayChordsCommand => new RelayCommand(execute => PlayChords(), canExecute=> noSongPlaying);
 
-        public RelayCommand GenerateSelectedCommand => new RelayCommand(execute => GenerateSelceted());
+        public RelayCommand GenerateSelectedCommand => new RelayCommand(execute => GenSelected());
 
         public int buttonPressedRow;
         public int buttonPressedColumn;
@@ -729,6 +729,7 @@ namespace NAudioSynth.ViewModel
 
         private void UpdateActiveButtons()
         {
+            //TODO MAKE FUNCTION REFRESH CONNECTED ATTRIBUTE
             for (int i = 0; i < NoteGrid.availableNoteTypes; i++)
             {
                 for(int j = 0; j < NoteGrid.availableNoteButtons; j++)
@@ -782,6 +783,17 @@ namespace NAudioSynth.ViewModel
                 }
                 noteGrid.SwitchButtonsPressed(OctavePosition, NotePosition, GetActiveTab());
             }
+        }
+
+        public void ConnectedPressed(Button srcButton)
+        {
+            int row = Grid.GetRow(srcButton);
+            int column = Grid.GetColumn(srcButton);
+
+            int OctavePosition = row + (NoteGrid.availableNoteTypes * octaveNo);
+            int NotePosition = column + (NoteGrid.availableNoteButtons * pageNo);
+
+            noteGrid.SwitchConnectedProperty(OctavePosition,NotePosition, GetActiveTab());
         }
 
         public void SelectPage(Button srcButton)
@@ -888,11 +900,84 @@ namespace NAudioSynth.ViewModel
                     return new NoteDetails(0.2f, noteGrid.Notes["B" + notePosition], .2f, SignalGeneratorType.Sin);
                 default:
                     return new NoteDetails();
-                    break;
             }
         }
+        //instead of searching down create long concatenation of columns
+        //then mix the longs together
 
-        private void GenerateSelceted()
+        private void GenSelected()
+        {
+            int latestNote = 0;
+            for (int rows = 0; rows < NoteGrid.totalNoteTypes; rows++)
+            {
+                for (int cols = (NoteGrid.totalNotes) - 1; cols >= latestNote; cols--)
+                {
+                    if (noteGrid.QueryButtonsPressed(rows, cols, "Sin") || noteGrid.QueryButtonsPressed(rows, cols, "Saw"))
+                    {
+                        latestNote = cols;
+                        break;
+                    }
+                }
+            }
+
+            List<ISampleProvider> tracksToCombine = new List<ISampleProvider>();
+
+            //loop through available note types C-B octaves 0-5
+            for(int i = 0; i<NoteGrid.totalNoteTypes; i++)
+            {
+                //Create a track for each note type
+                List<ISampleProvider> notesToPlay = new List<ISampleProvider>(); ;
+
+                //loop through available note positions until the last note to be played is reached
+                for (int j = 0; j < latestNote + 1; j++)
+                {
+
+                    //determine which note and at what octave it should be played at
+                    int noteType = i % NoteGrid.availableNoteTypes;
+                    int noteOctave = i / NoteGrid.availableNoteTypes;
+                    //check if note needs to be played
+                    if (noteGrid.QueryButtonsPressed(i, j, "Sin"))
+                    {
+                        //generate the note details
+                        NoteDetails note = FormNote(noteType, noteOctave, SignalGeneratorType.Sin);
+
+                        //check if the note should be held or tapped
+                        bool noteHeld = noteGrid.QueryConnected(i, j, "Sin");
+                        //keep incrementing along until reaching a note that shouldn't be connected
+                        while (noteHeld && j< NoteGrid.totalNotes)
+                        {
+                            j++;
+                            //extend the current note
+                            note.time += NoteGrid.timePerNote;
+                            noteHeld = noteGrid.QueryConnected(i, j, "Sin");
+                            //if the next note shouldn't be connected we still need to perform the other logic on it so decrement the loop counter
+                            if (!noteHeld) j--;
+                        }
+
+                        //add note to track
+                        notesToPlay.Add(noteGrid.GenNote(note));
+                    }
+                    else
+                    {
+                        //add silence to track
+                        notesToPlay.Add(noteGrid.GenSilence(NoteGrid.timePerNote));
+                    }
+                }
+                //combine notes into track
+                if(notesToPlay.Count>0)
+                {
+                    tracksToCombine.Add(noteGrid.ConcatenateNotes(notesToPlay));
+                }
+            }
+            //add to song
+            if(tracksToCombine.Count>0) noteGrid.SetCurrentSong(noteGrid.CombineTracks(tracksToCombine));
+        }
+
+        /// <summary>
+        /// ///////////////////////////////////////////////////////////////////////////////////////
+        /// </summary>
+
+        private void GenerateSelected()
         {
             int latestNote = 0;
             for (int rows = 0; rows < NoteGrid.totalNoteTypes; rows++)
@@ -909,16 +994,41 @@ namespace NAudioSynth.ViewModel
 
             List<ISampleProvider> song = new List<ISampleProvider>();
 
+            bool lastSinConnected = false;
+            bool lastSawConnected = false;
             for (int i = 0; i < latestNote+1; i++)
             {
                 List<NoteDetails> notesToPlay = new List<NoteDetails>();
+
                 for (int j = 0; j < NoteGrid.totalNoteTypes; j++)
                 {
                     int noteType = j % NoteGrid.availableNoteTypes;
                     int notePosition = j / NoteGrid.availableNoteTypes;
                     if (noteGrid.QueryButtonsPressed(j, i, "Sin"))
                     {
-                        notesToPlay.Add(FormNote(noteType, notePosition, SignalGeneratorType.Sin));
+                        if(lastSinConnected)
+                        {
+                            lastSinConnected = noteGrid.QueryConnected(j, i-1, "Sin");
+                        }
+                        else
+                        {
+                            NoteDetails note = FormNote(noteType, notePosition, SignalGeneratorType.Sin);
+                            bool nextConnected = noteGrid.QueryConnected(j, i, "Sin");
+                            if(nextConnected)
+                            {
+                                lastSinConnected= true;
+                                int inc = 1;
+                                while (nextConnected)
+                                {
+                                    note.time += 0.2f;
+                                    nextConnected = noteGrid.QueryConnected(j, i + inc, "Sin");
+                                    inc++;
+                                }
+                            }
+
+                            notesToPlay.Add(note);
+                        }
+
                     }
                     if(noteGrid.QueryButtonsPressed(j,i,"Saw"))
                     {
