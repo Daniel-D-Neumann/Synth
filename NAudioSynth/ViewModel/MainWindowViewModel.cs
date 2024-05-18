@@ -15,6 +15,36 @@ using System.Data.Common;
 
 namespace NAudioSynth.ViewModel
 {
+    public class ButtonDetails
+    {
+        SolidColorBrush backgroundColor;
+        public SolidColorBrush BackgroundColor
+        {
+            get { return backgroundColor; }
+            set
+            {
+                backgroundColor = value;
+                MainWindow.getViewModel().OnPropertyChanged();
+            }
+        }
+        bool connected;
+
+        public bool Connected
+        {
+            get { return connected; }
+            set
+            {
+                connected = value;
+                MainWindow.getViewModel().OnPropertyChanged();
+            }
+        }
+        public ButtonDetails(SolidColorBrush color, bool isConnected)
+        {
+            backgroundColor = color;
+            connected = isConnected;
+        }
+    }
+
     public class MainWindowViewModel : ViewModel
     {
         public int pageNo = 0;
@@ -28,12 +58,12 @@ namespace NAudioSynth.ViewModel
 
         public int buttonPressedRow;
         public int buttonPressedColumn;
-        public List<List<SolidColorBrush>> buttonColors;
+        public List<List<ButtonDetails>> buttonDetails;
 
-        #region ButtonBackgroundProperties
-        private SolidColorBrush b00 = new SolidColorBrush(Colors.Red);
+        #region ButtonProperties
+        private ButtonDetails b00 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B00
+        public ButtonDetails B00
         {
             get { return b00; }
             set
@@ -42,9 +72,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b01 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b01 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B01
+        public ButtonDetails B01
         {
             get { return b01; }
             set
@@ -53,9 +83,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b02 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b02 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B02
+        public ButtonDetails B02
         {
             get { return b02; }
             set
@@ -64,9 +94,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b03 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b03 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B03
+        public ButtonDetails B03
         {
             get { return b03; }
             set
@@ -75,9 +105,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b04 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b04 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B04
+        public ButtonDetails B04
         {
             get { return b04; }
             set
@@ -86,9 +116,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b05 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b05 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B05
+        public ButtonDetails B05
         {
             get { return b05; }
             set
@@ -97,9 +127,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b06 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b06 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B06
+        public ButtonDetails B06
         {
             get { return b06; }
             set
@@ -108,9 +138,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b07 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b07 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B07
+        public ButtonDetails B07
         {
             get { return b07; }
             set
@@ -119,9 +149,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b10 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b10 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B10
+        public ButtonDetails B10
         {
             get { return b10; }
             set
@@ -130,9 +160,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b11 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b11 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B11
+        public ButtonDetails B11
         {
             get { return b11; }
             set
@@ -141,9 +171,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b12 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b12 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B12
+        public ButtonDetails B12
         {
             get { return b12; }
             set
@@ -152,9 +182,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b13 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b13 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B13
+        public ButtonDetails B13
         {
             get { return b13; }
             set
@@ -163,9 +193,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b14 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b14 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B14
+        public ButtonDetails B14
         {
             get { return b14; }
             set
@@ -174,9 +204,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b15 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b15 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B15
+        public ButtonDetails B15
         {
             get { return b15; }
             set
@@ -185,9 +215,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b16 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b16 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B16
+        public ButtonDetails B16
         {
             get { return b16; }
             set
@@ -196,9 +226,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b17 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b17 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B17
+        public ButtonDetails B17
         {
             get { return b17; }
             set
@@ -207,9 +237,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b20 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b20 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B20
+        public ButtonDetails B20
         {
             get { return b20; }
             set
@@ -218,9 +248,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b21 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b21 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B21
+        public ButtonDetails B21
         {
             get { return b21; }
             set
@@ -229,9 +259,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b22 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b22 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B22
+        public ButtonDetails B22
         {
             get { return b22; }
             set
@@ -240,9 +270,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b23 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b23 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B23
+        public ButtonDetails B23
         {
             get { return b23; }
             set
@@ -251,9 +281,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b24 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b24 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B24
+        public ButtonDetails B24
         {
             get { return b24; }
             set
@@ -262,9 +292,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b25 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b25 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B25
+        public ButtonDetails B25
         {
             get { return b25; }
             set
@@ -273,9 +303,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b26 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b26 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B26
+        public ButtonDetails B26
         {
             get { return b26; }
             set
@@ -284,9 +314,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b27 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b27 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B27
+        public ButtonDetails B27
         {
             get { return b27; }
             set
@@ -295,9 +325,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b30 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b30 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B30
+        public ButtonDetails B30
         {
             get { return b30; }
             set
@@ -306,9 +336,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b31 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b31 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B31
+        public ButtonDetails B31
         {
             get { return b31; }
             set
@@ -317,9 +347,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b32 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b32 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B32
+        public ButtonDetails B32
         {
             get { return b32; }
             set
@@ -328,9 +358,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b33 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b33 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B33
+        public ButtonDetails B33
         {
             get { return b33; }
             set
@@ -339,9 +369,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b34 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b34 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B34
+        public ButtonDetails B34
         {
             get { return b34; }
             set
@@ -350,9 +380,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b35 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b35 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B35
+        public ButtonDetails B35
         {
             get { return b35; }
             set
@@ -361,9 +391,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b36 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b36 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B36
+        public ButtonDetails B36
         {
             get { return b36; }
             set
@@ -372,9 +402,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b37 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b37 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B37
+        public ButtonDetails B37
         {
             get { return b37; }
             set
@@ -383,9 +413,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b40 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b40 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B40
+        public ButtonDetails B40
         {
             get { return b40; }
             set
@@ -394,9 +424,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b41 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b41 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B41
+        public ButtonDetails B41
         {
             get { return b41; }
             set
@@ -405,9 +435,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b42 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b42 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B42
+        public ButtonDetails B42
         {
             get { return b42; }
             set
@@ -416,9 +446,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b43 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b43 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B43
+        public ButtonDetails B43
         {
             get { return b43; }
             set
@@ -427,9 +457,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b44 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b44 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B44
+        public ButtonDetails B44
         {
             get { return b44; }
             set
@@ -438,9 +468,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b45 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b45 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B45
+        public ButtonDetails B45
         {
             get { return b45; }
             set
@@ -449,9 +479,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b46 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b46 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B46
+        public ButtonDetails B46
         {
             get { return b46; }
             set
@@ -460,9 +490,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b47 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b47 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B47
+        public ButtonDetails B47
         {
             get { return b47; }
             set
@@ -471,9 +501,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b50 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b50 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B50
+        public ButtonDetails B50
         {
             get { return b50; }
             set
@@ -482,9 +512,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b51 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b51 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B51
+        public ButtonDetails B51
         {
             get { return b51; }
             set
@@ -493,9 +523,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b52 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b52 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B52
+        public ButtonDetails B52
         {
             get { return b52; }
             set
@@ -504,9 +534,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b53 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b53 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B53
+        public ButtonDetails B53
         {
             get { return b53; }
             set
@@ -515,9 +545,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b54 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b54 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B54
+        public ButtonDetails B54
         {
             get { return b54; }
             set
@@ -526,9 +556,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b55 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b55 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B55
+        public ButtonDetails B55
         {
             get { return b55; }
             set
@@ -537,9 +567,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b56 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b56 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B56
+        public ButtonDetails B56
         {
             get { return b56; }
             set
@@ -548,9 +578,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b57 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b57 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B57
+        public ButtonDetails B57
         {
             get { return b57; }
             set
@@ -559,9 +589,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b60 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b60 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B60
+        public ButtonDetails B60
         {
             get { return b60; }
             set
@@ -570,9 +600,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b61 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b61 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B61
+        public ButtonDetails B61
         {
             get { return b61; }
             set
@@ -581,9 +611,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b62 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b62 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B62
+        public ButtonDetails B62
         {
             get { return b62; }
             set
@@ -592,9 +622,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b63 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b63 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B63
+        public ButtonDetails B63
         {
             get { return b63; }
             set
@@ -603,9 +633,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b64 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b64 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B64
+        public ButtonDetails B64
         {
             get { return b64; }
             set
@@ -614,9 +644,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b65 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b65 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B65
+        public ButtonDetails B65
         {
             get { return b65; }
             set
@@ -625,9 +655,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b66 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b66 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B66
+        public ButtonDetails B66
         {
             get { return b66; }
             set
@@ -636,9 +666,9 @@ namespace NAudioSynth.ViewModel
                 OnPropertyChanged();
             }
         }
-        private SolidColorBrush b67 = new SolidColorBrush(Colors.Red);
+        private ButtonDetails b67 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
-        public SolidColorBrush B67
+        public ButtonDetails B67
         {
             get { return b67; }
             set
@@ -651,15 +681,15 @@ namespace NAudioSynth.ViewModel
 
         public MainWindowViewModel()
         {
-            buttonColors = new List<List<SolidColorBrush>>
+            buttonDetails = new List<List<ButtonDetails>>
             {
-                new List<SolidColorBrush>() {B00,B01,B02,B03,B04,B05,B06,B07},
-                new List<SolidColorBrush>() {B10,B11,B12,B13,B14,B15,B16,B17},
-                new List<SolidColorBrush>() {B20,B21,B22,B23,B24,B25,B26,B27},
-                new List<SolidColorBrush>() {B30,B31,B32,B33,B34,B35,B36,B37},
-                new List<SolidColorBrush>() {B40,B41,B42,B43,B44,B45,B46,B47},
-                new List<SolidColorBrush>() {B50,B51,B52,B53,B54,B55,B56,B57},
-                new List<SolidColorBrush>() {B60,B61,B62,B63,B64,B65,B66,B67},
+                new List<ButtonDetails>() {B00,B01,B02,B03,B04,B05,B06,B07},
+                new List<ButtonDetails>() {B10,B11,B12,B13,B14,B15,B16,B17},
+                new List<ButtonDetails>() {B20,B21,B22,B23,B24,B25,B26,B27},
+                new List<ButtonDetails>() {B30,B31,B32,B33,B34,B35,B36,B37},
+                new List<ButtonDetails>() {B40,B41,B42,B43,B44,B45,B46,B47},
+                new List<ButtonDetails>() {B50,B51,B52,B53,B54,B55,B56,B57},
+                new List<ButtonDetails>() {B60,B61,B62,B63,B64,B65,B66,B67},
             };
         }
 
@@ -735,22 +765,33 @@ namespace NAudioSynth.ViewModel
                 for(int j = 0; j < NoteGrid.availableNoteButtons; j++)
                 {
                     bool buttonPressed = false;
+                    bool connectedPressed = false;
                     if(SinSelected)
                     {
                         buttonPressed = noteGrid.QueryButtonsPressed(i+(octaveNo*NoteGrid.availableNoteTypes), j+(pageNo*NoteGrid.availableNoteButtons), GetActiveTab());
+                        connectedPressed = noteGrid.QueryConnected(i + (octaveNo * NoteGrid.availableNoteTypes), j + (pageNo * NoteGrid.availableNoteButtons), GetActiveTab());
                     }
                     else if (sawSelected)
                     {
                         buttonPressed = noteGrid.QueryButtonsPressed(i + (octaveNo * NoteGrid.availableNoteTypes), j + (pageNo * NoteGrid.availableNoteButtons), GetActiveTab());
+                        connectedPressed = noteGrid.QueryConnected(i + (octaveNo * NoteGrid.availableNoteTypes), j + (pageNo * NoteGrid.availableNoteButtons), GetActiveTab());
                     }
-
-                    if(buttonPressed)
+                    if (buttonPressed)
                     {
-                        buttonColors[i][j].Color = Colors.Green;
+                        buttonDetails[i][j].BackgroundColor.Color = Colors.Green;
                     }
                     else
                     {
-                        buttonColors[i][j].Color = Colors.Red;
+                        buttonDetails[i][j].BackgroundColor.Color = Colors.Red;
+                    }
+
+                    if(connectedPressed)
+                    {
+                        buttonDetails[i][j].Connected = true;
+                    }
+                    else
+                    {
+                        buttonDetails[i][j].Connected = false;
                     }
                 }
             }
@@ -775,11 +816,11 @@ namespace NAudioSynth.ViewModel
 
                 if (noteGrid.QueryButtonsPressed(OctavePosition, NotePosition, GetActiveTab()))
                 {
-                    buttonColors[row][column].Color = Colors.Red;
+                    buttonDetails[row][column].BackgroundColor.Color = Colors.Red;
                 }
                 else
                 {
-                    buttonColors[row][column].Color = Colors.Green;
+                    buttonDetails[row][column].BackgroundColor.Color = Colors.Green;
                 }
                 noteGrid.SwitchButtonsPressed(OctavePosition, NotePosition, GetActiveTab());
             }
@@ -794,6 +835,7 @@ namespace NAudioSynth.ViewModel
             int NotePosition = column + (NoteGrid.availableNoteButtons * pageNo);
 
             noteGrid.SwitchConnectedProperty(OctavePosition,NotePosition, GetActiveTab());
+            buttonDetails[row][column].Connected = !buttonDetails[row][column].Connected;
         }
 
         public void SelectPage(Button srcButton)

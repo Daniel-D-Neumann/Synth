@@ -1,0 +1,63 @@
+            <local:NoteButton x:Name="C" Content="C" Grid.Row="0" Background="{Binding B00, UpdateSourceTrigger=PropertyChanged}"/>
+            <local:NoteButton x:Name="C2" Content="C" Grid.Row="0" Grid.Column="1" Background="{Binding B01}"  />
+            <local:NoteButton x:Name="C3" Content="C" Grid.Row="0" Grid.Column="2" Background="{Binding B02}"  />
+            <local:NoteButton x:Name="C4" Content="C" Grid.Row="0" Grid.Column="3" Background="{Binding B03}"  />
+            <local:NoteButton x:Name="C5" Content="C" Grid.Row="0" Grid.Column="4" Background="{Binding B04}"  />
+            <local:NoteButton x:Name="C6" Content="C" Grid.Row="0" Grid.Column="5" Background="{Binding B05}"  />
+            <local:NoteButton x:Name="C7" Content="C" Grid.Row="0" Grid.Column="6" Background="{Binding B06}"  />
+            <local:NoteButton x:Name="C8" Content="C" Grid.Row="0" Grid.Column="7" Background="{Binding B07}"  />
+
+            <local:NoteButton x:Name="D" Content="D" Grid.Row="1" Background="{Binding B10}"  />
+            <local:NoteButton x:Name="D2" Content="D" Grid.Row="1" Grid.Column="1" Background="{Binding B11}"  />
+            <local:NoteButton x:Name="D3" Content="D" Grid.Row="1" Grid.Column="2" Background="{Binding B12}"  />
+            <local:NoteButton x:Name="D4" Content="D" Grid.Row="1" Grid.Column="3" Background="{Binding B13}"  />
+            <local:NoteButton x:Name="D5" Content="D" Grid.Row="1" Grid.Column="4" Background="{Binding B14}"  />
+            <local:NoteButton x:Name="D6" Content="D" Grid.Row="1" Grid.Column="5" Background="{Binding B15}"  />
+            <local:NoteButton x:Name="D7" Content="D" Grid.Row="1" Grid.Column="6" Background="{Binding B16}"  />
+            <local:NoteButton x:Name="D8" Content="D" Grid.Row="1" Grid.Column="7" Background="{Binding B17}"  />
+
+            <local:NoteButton x:Name="E" Content="E" Grid.Row="2" Background="{Binding B20}"  />
+            <local:NoteButton x:Name="E2" Content="E" Grid.Row="2" Grid.Column="1" Background="{Binding B21}"  />
+            <local:NoteButton x:Name="E3" Content="E" Grid.Row="2" Grid.Column="2" Background="{Binding B22}"  />
+            <local:NoteButton x:Name="E4" Content="E" Grid.Row="2" Grid.Column="3" Background="{Binding B23}"  />
+            <local:NoteButton x:Name="E5" Content="E" Grid.Row="2" Grid.Column="4" Background="{Binding B24}"  />
+            <local:NoteButton x:Name="E6" Content="E" Grid.Row="2" Grid.Column="5" Background="{Binding B25}"  />
+            <local:NoteButton x:Name="E7" Content="E" Grid.Row="2" Grid.Column="6" Background="{Binding B26}"  />
+            <local:NoteButton x:Name="E8" Content="E" Grid.Row="2" Grid.Column="7" Background="{Binding B27}"  />
+
+            <local:NoteButton x:Name="F" Content="F" Grid.Row="3" Background="{Binding B30}"  />
+            <local:NoteButton x:Name="F2" Content="F" Grid.Row="3" Grid.Column="1" Background="{Binding B31}"  />
+            <local:NoteButton x:Name="F3" Content="F" Grid.Row="3" Grid.Column="2" Background="{Binding B32}"  />
+            <local:NoteButton x:Name="F4" Content="F" Grid.Row="3" Grid.Column="3" Background="{Binding B33}"  />
+            <local:NoteButton x:Name="F5" Content="F" Grid.Row="3" Grid.Column="4" Background="{Binding B34}"  />
+            <local:NoteButton x:Name="F6" Content="F" Grid.Row="3" Grid.Column="5" Background="{Binding B35}"  />
+            <local:NoteButton x:Name="F7" Content="F" Grid.Row="3" Grid.Column="6" Background="{Binding B36}"  />
+            <local:NoteButton x:Name="F8" Content="F" Grid.Row="3" Grid.Column="7" Background="{Binding B37}"  />
+
+            <local:NoteButton x:Name="G" Content="G" Grid.Row="4" Background="{Binding B40}"  />
+            <local:NoteButton x:Name="G2" Content="G" Grid.Row="4" Grid.Column="1" Background="{Binding B41}"  />
+            <local:NoteButton x:Name="G3" Content="G" Grid.Row="4" Grid.Column="2" Background="{Binding B42}"  />
+            <local:NoteButton x:Name="G4" Content="G" Grid.Row="4" Grid.Column="3" Background="{Binding B43}"  />
+            <local:NoteButton x:Name="G5" Content="G" Grid.Row="4" Grid.Column="4" Background="{Binding B44}"  />
+            <local:NoteButton x:Name="G6" Content="G" Grid.Row="4" Grid.Column="5" Background="{Binding B45}"  />
+            <local:NoteButton x:Name="G7" Content="G" Grid.Row="4" Grid.Column="6" Background="{Binding B46}"  />
+            <local:NoteButton x:Name="G8" Content="G" Grid.Row="4" Grid.Column="7" Background="{Binding B47}"  />
+
+            <local:NoteButton x:Name="A" Content="A" Grid.Row="5" Background="{Binding B50}"  />
+            <local:NoteButton x:Name="A2" Content="A" Grid.Row="5" Grid.Column="1" Background="{Binding B51}"  />
+            <local:NoteButton x:Name="A3" Content="A" Grid.Row="5" Grid.Column="2" Background="{Binding B52}"  />
+            <local:NoteButton x:Name="A4" Content="A" Grid.Row="5" Grid.Column="3" Background="{Binding B53}"  />
+            <local:NoteButton x:Name="A5" Content="A" Grid.Row="5" Grid.Column="4" Background="{Binding B54}"  />
+            <local:NoteButton x:Name="A6" Content="A" Grid.Row="5" Grid.Column="5" Background="{Binding B55}"  />
+            <local:NoteButton x:Name="A7" Content="A" Grid.Row="5" Grid.Column="6" Background="{Binding B56}"  />
+            <local:NoteButton x:Name="A8" Content="A" Grid.Row="5" Grid.Column="7" Background="{Binding B57}"  />
+
+            <local:NoteButton x:Name="B" Content="B" Grid.Row="6" Background="{Binding B60}"  />
+            <local:NoteButton x:Name="B2" Content="B" Grid.Row="6" Grid.Column="1" Background="{Binding B61}"  />
+            <local:NoteButton x:Name="B3" Content="B" Grid.Row="6" Grid.Column="2" Background="{Binding B62}"  />
+            <local:NoteButton x:Name="B4" Content="B" Grid.Row="6" Grid.Column="3" Background="{Binding B63}"  />
+            <local:NoteButton x:Name="B5" Content="B" Grid.Row="6" Grid.Column="4" Background="{Binding B64}"  />
+            <local:NoteButton x:Name="B6" Content="B" Grid.Row="6" Grid.Column="5" Background="{Binding B65}"  />
+            <local:NoteButton x:Name="B7" Content="B" Grid.Row="6" Grid.Column="6" Background="{Binding B66}"  />
+            <local:NoteButton x:Name="B8" Content="B" Grid.Row="6" Grid.Column="7" Background="{Binding B67}"  />
+            
