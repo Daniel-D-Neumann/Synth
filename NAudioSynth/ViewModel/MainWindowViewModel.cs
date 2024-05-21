@@ -927,19 +927,19 @@ namespace NAudioSynth.ViewModel
             switch (noteType)
             {
                 case (0):
-                    return new NoteDetails(0.2f, noteGrid.Notes["C" + notePosition], .2f, SignalGeneratorType.Sin);
+                    return new NoteDetails(0.2f, noteGrid.Notes["C" + notePosition], .2f, signalType);
                 case (1):
-                    return new NoteDetails(0.2f, noteGrid.Notes["D" + notePosition], .2f, SignalGeneratorType.Sin);
+                    return new NoteDetails(0.2f, noteGrid.Notes["D" + notePosition], .2f, signalType);
                 case (2):
-                    return new NoteDetails(0.2f, noteGrid.Notes["E" + notePosition], .2f, SignalGeneratorType.Sin);
+                    return new NoteDetails(0.2f, noteGrid.Notes["E" + notePosition], .2f, signalType);
                 case (3):
-                    return new NoteDetails(0.2f, noteGrid.Notes["F" + notePosition], .2f, SignalGeneratorType.Sin);
+                    return new NoteDetails(0.2f, noteGrid.Notes["F" + notePosition], .2f, signalType);
                 case (4):
-                    return new NoteDetails(0.2f, noteGrid.Notes["G" + notePosition], .2f, SignalGeneratorType.Sin);
+                    return new NoteDetails(0.2f, noteGrid.Notes["G" + notePosition], .2f, signalType);
                 case (5):
-                    return new NoteDetails(0.2f, noteGrid.Notes["A" + notePosition], .2f, SignalGeneratorType.Sin);
+                    return new NoteDetails(0.2f, noteGrid.Notes["A" + notePosition], .2f, signalType);
                 case (6):
-                    return new NoteDetails(0.2f, noteGrid.Notes["B" + notePosition], .2f, SignalGeneratorType.Sin);
+                    return new NoteDetails(0.2f, noteGrid.Notes["B" + notePosition], .2f, signalType);
                 default:
                     return new NoteDetails();
             }
