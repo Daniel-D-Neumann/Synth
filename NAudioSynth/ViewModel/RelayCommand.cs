@@ -22,12 +22,6 @@ namespace NAudioSynth.ViewModel
             this.canExecute = canExecute;
         }
 
-        public RelayCommand(Action<object,string> execute, string param, Func<object,bool> canExecute = null)
-        {
-            this.executeParam = execute;
-            this.canExecute = canExecute;
-        }
-
         public bool CanExecute(object? parameter)
         {
             return canExecute == null || canExecute(parameter);
