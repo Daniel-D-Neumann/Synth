@@ -7,9 +7,10 @@ Stop button so the user can stop the song when they wish
 pages follow along while the music happens
 
 
-rewrite connection and sound to be seperate from buttons, it kinda sucks but oh well
+rewrite connection and sound to be seperate from buttons, it kinda sucks but oh well, should also make active toggleable from here
 see if you can highlight from right click so the user doesn't have to keep pressing the same note to change it
 
+Tooltips for shit?
 
 On button right click open menu where note details can be changed
 
