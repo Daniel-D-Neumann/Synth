@@ -12,6 +12,8 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Data.Common;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace NAudioSynth.ViewModel
 {
@@ -58,9 +60,13 @@ namespace NAudioSynth.ViewModel
 
         public RelayCommand GenerateSelectedCommand => new RelayCommand(execute => GenSelected());
 
+        public RelayCommand ExportCommand => new RelayCommand(execute => ExportWAV());
+
         public int buttonPressedRow;
         public int buttonPressedColumn;
         public List<List<ButtonDetails>> buttonDetails;
+
+        private string filePathRegex = @"^[\w\-. ]+$";
 
         #region ButtonProperties
         private ButtonDetails b00 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
@@ -850,6 +856,28 @@ namespace NAudioSynth.ViewModel
             }
         }
 
+        private string exportFilePath;
+
+        public string ExportFilePath
+        {
+            get { return exportFilePath; }
+            set 
+            { 
+                exportFilePath = value; 
+                OnPropertyChanged();
+            }
+        }
+
+        private string exportError;
+        public string ExportError
+        {
+            get { return exportError; }
+            set 
+            {
+                exportError = value;
+                OnPropertyChanged();
+            }
+        }
 
         private int GetOctavePosition()
         {
@@ -1141,75 +1169,116 @@ namespace NAudioSynth.ViewModel
         /// ///////////////////////////////////////////////////////////////////////////////////////
         /// </summary>
 
-        private void GenerateSelected()
+        //private void GenerateSelected()
+        //{
+        //    int latestNote = 0;
+        //    for (int rows = 0; rows < NoteGrid.totalNoteTypes; rows++)
+        //    {
+        //        for (int cols = (NoteGrid.totalNotes) - 1; cols >= latestNote; cols--)
+        //        {
+        //            if (noteGrid.QueryButtonsPressed(rows, cols, "Sin") || noteGrid.QueryButtonsPressed(rows, cols, "Saw"))
+        //            {
+        //                latestNote = cols;
+        //                break;
+        //            }
+        //        }
+        //    }
+
+        //    List<ISampleProvider> song = new List<ISampleProvider>();
+
+        //    bool lastSinConnected = false;
+        //    bool lastSawConnected = false;
+        //    for (int i = 0; i < latestNote+1; i++)
+        //    {
+        //        List<NoteDetails> notesToPlay = new List<NoteDetails>();
+
+        //        for (int j = 0; j < NoteGrid.totalNoteTypes; j++)
+        //        {
+        //            int noteType = j % NoteGrid.availableNoteTypes;
+        //            int notePosition = j / NoteGrid.availableNoteTypes;
+        //            if (noteGrid.QueryButtonsPressed(j, i, "Sin"))
+        //            {
+        //                if(lastSinConnected)
+        //                {
+        //                    lastSinConnected = noteGrid.QueryConnected(j, i-1, "Sin");
+        //                }
+        //                else
+        //                {
+        //                    NoteDetails note = FormNote(0.2f,noteType, notePosition, SignalGeneratorType.Sin);
+        //                    bool nextConnected = noteGrid.QueryConnected(j, i, "Sin");
+        //                    if(nextConnected)
+        //                    {
+        //                        lastSinConnected= true;
+        //                        int inc = 1;
+        //                        while (nextConnected)
+        //                        {
+        //                            note.time += 0.2f;
+        //                            nextConnected = noteGrid.QueryConnected(j, i + inc, "Sin");
+        //                            inc++;
+        //                        }
+        //                    }
+
+        //                    notesToPlay.Add(note);
+        //                }
+
+        //            }
+        //            if(noteGrid.QueryButtonsPressed(j,i,"Saw"))
+        //            {
+        //                notesToPlay.Add(FormNote(0.2f,noteType, notePosition, SignalGeneratorType.SawTooth));
+        //            }
+        //        }
+        //        if (notesToPlay.Count > 0)
+        //        {
+        //            //NoteDetails[] notesToPlayArr = notesToPlay.ToArray();
+        //            song.Add(noteGrid.CombineNotes(notesToPlay));
+        //        }
+        //        else
+        //        {
+        //            song.Add(noteGrid.GenSilence(.2f));
+        //        }
+        //    }
+        //    noteGrid.SetCurrentSong(new ConcatenatingSampleProvider(song));
+        //}
+
+        private void ExportWAV()
         {
-            int latestNote = 0;
-            for (int rows = 0; rows < NoteGrid.totalNoteTypes; rows++)
+            if(!string.IsNullOrEmpty(exportFilePath))
             {
-                for (int cols = (NoteGrid.totalNotes) - 1; cols >= latestNote; cols--)
+                var wout = new WaveOutEvent();
+                wout.Init(noteGrid.GetCurrentSong());
+                string filePath = AppDomain.CurrentDomain.BaseDirectory;
+                filePath = filePath.Remove(filePath.Length - 25);
+                filePath += "Output\\" + exportFilePath + ".wav";
+
+                Regex re = new Regex(filePathRegex);
+
+                //ensure file path is valid
+                if(re.IsMatch(exportFilePath))
                 {
-                    if (noteGrid.QueryButtonsPressed(rows, cols, "Sin") || noteGrid.QueryButtonsPressed(rows, cols, "Saw"))
+                    //ensure file does not already exist
+                    if (!File.Exists(filePath))
                     {
-                        latestNote = cols;
-                        break;
+                        WaveFormat waveFormat = noteGrid.GetCurrentSong().WaveFormat;
+                        WaveFileWriter.CreateWaveFile(filePath, noteGrid.GetCurrentSong().ToWaveProvider());
+                        SongAvailable = false;
+                        ExportError = "File created";
                     }
-                }
-            }
-
-            List<ISampleProvider> song = new List<ISampleProvider>();
-
-            bool lastSinConnected = false;
-            bool lastSawConnected = false;
-            for (int i = 0; i < latestNote+1; i++)
-            {
-                List<NoteDetails> notesToPlay = new List<NoteDetails>();
-
-                for (int j = 0; j < NoteGrid.totalNoteTypes; j++)
-                {
-                    int noteType = j % NoteGrid.availableNoteTypes;
-                    int notePosition = j / NoteGrid.availableNoteTypes;
-                    if (noteGrid.QueryButtonsPressed(j, i, "Sin"))
+                    else
                     {
-                        if(lastSinConnected)
-                        {
-                            lastSinConnected = noteGrid.QueryConnected(j, i-1, "Sin");
-                        }
-                        else
-                        {
-                            NoteDetails note = FormNote(0.2f,noteType, notePosition, SignalGeneratorType.Sin);
-                            bool nextConnected = noteGrid.QueryConnected(j, i, "Sin");
-                            if(nextConnected)
-                            {
-                                lastSinConnected= true;
-                                int inc = 1;
-                                while (nextConnected)
-                                {
-                                    note.time += 0.2f;
-                                    nextConnected = noteGrid.QueryConnected(j, i + inc, "Sin");
-                                    inc++;
-                                }
-                            }
-
-                            notesToPlay.Add(note);
-                        }
-
+                        ExportError = "File exists";
                     }
-                    if(noteGrid.QueryButtonsPressed(j,i,"Saw"))
-                    {
-                        notesToPlay.Add(FormNote(0.2f,noteType, notePosition, SignalGeneratorType.SawTooth));
-                    }
-                }
-                if (notesToPlay.Count > 0)
-                {
-                    //NoteDetails[] notesToPlayArr = notesToPlay.ToArray();
-                    song.Add(noteGrid.CombineNotes(notesToPlay));
                 }
                 else
                 {
-                    song.Add(noteGrid.GenSilence(.2f));
+                    ExportError = "Invalid characters";
                 }
             }
-            noteGrid.SetCurrentSong(new ConcatenatingSampleProvider(song));
+            else
+            {
+                ExportError = "No file name";
+            }
+            
+            
         }
     }
 }

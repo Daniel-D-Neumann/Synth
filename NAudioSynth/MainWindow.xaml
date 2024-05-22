@@ -7,7 +7,7 @@
         xmlns:UserControls="clr-namespace:NAudioSynth.View.UserControls"
         
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="450" Width="900"
         MinHeight="400" MinWidth="700"
         >
     <Grid>
@@ -17,9 +17,9 @@
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="150"/>
             <ColumnDefinition/>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="150"/>
         </Grid.ColumnDefinitions>
         <TabControl Grid.Row="1" Grid.Column="1">
             <TabItem Header="Sin" Selector.IsSelected="{Binding SinSelected}">
@@ -53,7 +53,8 @@
             </Grid.RowDefinitions>
             <Button Grid.Row="2" Content="Export as WAV" HorizontalAlignment="Center" Command="{Binding ExportCommand}" IsEnabled="{Binding SongAvailable, UpdateSourceTrigger=PropertyChanged}"/>
             <Label Content="Enter FileName:" HorizontalAlignment="Center"/>
-            <TextBox Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Text="{Binding ExportFilePath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            <TextBox Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Text="{Binding ExportFilePath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            <Label Grid.Row="1" Content="{Binding ExportError, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
         </Grid>
         
     </Grid>
