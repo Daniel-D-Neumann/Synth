@@ -71,11 +71,20 @@ namespace NAudioSynth
 
         public static MainWindowViewModel getViewModel() { return viewModel; }
 
+        private void VolumeChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Slider? slider = e.Source as Slider;
+            if(slider != null) 
+            {
+                viewModel.VolumeChanged((float)slider.Value);
+            }
+        }
+
 
 
         //private void UpdateNotePressed(object sender, RoutedEventArgs e)
         //{
-            
+
         //    Button? srcButton = e.Source as Button;
         //    if(srcButton != null)
         //    {

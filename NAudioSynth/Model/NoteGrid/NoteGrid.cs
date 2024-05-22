@@ -13,7 +13,7 @@ namespace NAudioSynth.Model.NoteGrid
     {
         public bool active = false;
         public bool connected = false;
-        public float gain;
+        public float gain = 1;
         public float frequency;
         public float time;
         public SignalGeneratorType generatorType;
@@ -58,10 +58,21 @@ namespace NAudioSynth.Model.NoteGrid
          {"B0", 30.87f},  {"B1", 61.74f},  {"B2", 123.47f},  {"B3", 246.94f},   {"B4", 493.88f},  {"B5", 987.77f },
         };
 
-
         NoteDetails[,] buttonsPressedSin = new NoteDetails[totalNoteTypes, totalNotes];
 
         NoteDetails[,] buttonsPressedSaw = new NoteDetails[totalNoteTypes, totalNotes];
+
+        public NoteGrid()
+        {
+            for (int i = 0; i < totalNoteTypes; i++)
+            {
+                for (int j = 0; j < totalNotes; j++)
+                {
+                    buttonsPressedSin[i, j].gain = 1f;
+                    buttonsPressedSaw[i, j].gain = 1f;
+                }
+            }
+        }
 
         public Dictionary<string,SignalGeneratorType> generatorTypes = new Dictionary<string, SignalGeneratorType> {
             {"Sin",SignalGeneratorType.Sin},
@@ -79,12 +90,6 @@ namespace NAudioSynth.Model.NoteGrid
             else if (type =="Saw") buttonsPressedSaw[row, column].active = !buttonsPressedSaw[row, column].active;
         }
 
-        public void SwitchConnectedProperty(int row, int column, string type)
-        {
-            if (type == "Sin") buttonsPressedSin[row, column].connected = !buttonsPressedSin[row, column].connected;
-            else if (type == "Saw") buttonsPressedSaw[row, column].connected = !buttonsPressedSaw[row, column].connected;
-        }
-
         public bool QueryButtonsPressed(int row, int column, string type)
         {
             if (type == "Sin") return buttonsPressedSin[row, column].active;
@@ -92,11 +97,36 @@ namespace NAudioSynth.Model.NoteGrid
             return false;
         }
 
+        public void UpdateButtonConnected(int row, int column, bool changeTo, string type)
+        {
+            if (type == "Sin") buttonsPressedSin[row, column].connected = changeTo;
+            else if (type == "Saw") buttonsPressedSaw[row, column].connected = changeTo;
+        }
+
+        public void SwitchConnectedProperty(int row, int column, string type)
+        {
+            if (type == "Sin") buttonsPressedSin[row, column].connected = !buttonsPressedSin[row, column].connected;
+            else if (type == "Saw") buttonsPressedSaw[row, column].connected = !buttonsPressedSaw[row, column].connected;
+        }
+
         public bool QueryConnected(int row, int column, string type)
         {
             if (type == "Sin") return buttonsPressedSin[row, column].connected;
             else if (type == "Saw") return buttonsPressedSaw[row, column].connected;
             return false;
+        }
+
+        public float QueryVolume(int row, int column, string type)
+        {
+            if(type == "Sin") return buttonsPressedSin[row,column].gain;
+            else if(type == "Saw") return buttonsPressedSaw[row,column].gain;
+            return 0f;
+        }
+
+        public void SetVolume(int row, int column, float volume, string type)
+        {
+            if(type == "Sin") buttonsPressedSin[row,column].gain = volume;
+            else if (type == "Saw") buttonsPressedSaw[row, column].gain = volume;
         }
 
         public ISampleProvider GenNote(float gain, float frequency, float time, SignalGeneratorType type)

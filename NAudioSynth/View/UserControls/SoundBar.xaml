@@ -28,405 +28,180 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button x:Name="C" Content="C" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0" Background="{Binding B00.BackgroundColor, UpdateSourceTrigger=PropertyChanged}" Click="Note_Click">
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B00.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
             </Button>
             <Button x:Name="C2" Content="C" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0" Grid.Column="1" Background="{Binding B01.BackgroundColor}"  Click="Note_Click">
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B01.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="C3" Content="C" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0" Grid.Column="2" Background="{Binding B02.BackgroundColor}"  Click="Note_Click">
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B02.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="C4" Content="C" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0" Grid.Column="3" Background="{Binding B03.BackgroundColor}"  Click="Note_Click">
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B03.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="C5" Content="C" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0" Grid.Column="4" Background="{Binding B04.BackgroundColor}"  Click="Note_Click">
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B04.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="C6" Content="C" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0" Grid.Column="5" Background="{Binding B05.BackgroundColor}"  Click="Note_Click">
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B05.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="C7" Content="C" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0" Grid.Column="6" Background="{Binding B06.BackgroundColor}"  Click="Note_Click">
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B06.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="C8" Content="C" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0" Grid.Column="7" Background="{Binding B07.BackgroundColor}"  Click="Note_Click">
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B07.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="D" Content="D" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Background="{Binding B10.BackgroundColor}"  Click="Note_Click">
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B10.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
 
             <Button x:Name="D2" Content="D" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="1" Background="{Binding B11.BackgroundColor}"  Click="Note_Click">
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B11.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="D3" Content="D" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="2" Background="{Binding B12.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B12.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="D4" Content="D" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="3" Background="{Binding B13.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B13.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="D5" Content="D" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="4" Background="{Binding B14.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B14.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="D6" Content="D" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="5" Background="{Binding B15.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B15.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="D7" Content="D" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="6" Background="{Binding B16.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B16.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="D8" Content="D" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="7" Background="{Binding B17.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B17.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
 
 
             <Button x:Name="E" Content="E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="2" Background="{Binding B20.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B20.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="E2" Content="E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="2" Grid.Column="1" Background="{Binding B21.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B21.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="E3" Content="E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="2" Grid.Column="2" Background="{Binding B22.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B22.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="E4" Content="E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="2" Grid.Column="3" Background="{Binding B23.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B23.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="E5" Content="E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="2" Grid.Column="4" Background="{Binding B24.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B24.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="E6" Content="E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="2" Grid.Column="5" Background="{Binding B25.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B25.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="E7" Content="E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="2" Grid.Column="6" Background="{Binding B26.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B26.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="E8" Content="E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="2" Grid.Column="7" Background="{Binding B27.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B27.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
 
 
             <Button x:Name="F" Content="F" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="3" Background="{Binding B30.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B30.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="F2" Content="F" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="3" Grid.Column="1" Background="{Binding B31.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B31.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="F3" Content="F" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="3" Grid.Column="2" Background="{Binding B32.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B32.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="F4" Content="F" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="3" Grid.Column="3" Background="{Binding B33.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B33.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="F5" Content="F" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="3" Grid.Column="4" Background="{Binding B34.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B34.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="F6" Content="F" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="3" Grid.Column="5" Background="{Binding B35.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B35.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="F7" Content="F" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="3" Grid.Column="6" Background="{Binding B36.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B36.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="F8" Content="F" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="3" Grid.Column="7" Background="{Binding B37.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B37.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
 
             <Button x:Name="G" Content="G" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="4" Background="{Binding B40.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B40.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="G2" Content="G" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="1" Background="{Binding B41.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B41.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="G3" Content="G" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="2" Background="{Binding B42.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B42.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="G4" Content="G" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="3" Background="{Binding B43.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B43.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="G5" Content="G" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="4" Background="{Binding B44.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B44.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="G6" Content="G" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="5" Background="{Binding B45.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B45.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="G7" Content="G" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="6" Background="{Binding B46.BackgroundColor}" Click="Note_Click">
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B46.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="G8" Content="G" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="7" Background="{Binding B47.BackgroundColor}" Click="Note_Click">
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B47.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
 
 
             <Button x:Name="A" Content="A" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="5" Background="{Binding B50.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B50.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="A2" Content="A" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="5" Grid.Column="1" Background="{Binding B51.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B51.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="A3" Content="A" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="5" Grid.Column="2" Background="{Binding B52.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B52.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="A4" Content="A" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="5" Grid.Column="3" Background="{Binding B53.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B53.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="A5" Content="A" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="5" Grid.Column="4" Background="{Binding B54.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B54.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="A6" Content="A" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="5" Grid.Column="5" Background="{Binding B55.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B55.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="A7" Content="A" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="5" Grid.Column="6" Background="{Binding B56.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B56.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="A8" Content="A" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="5" Grid.Column="7" Background="{Binding B57.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B57.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
 
             <Button x:Name="B" Content="B" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="6" Background="{Binding B60.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B60.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="B2" Content="B" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="6" Grid.Column="1" Background="{Binding B61.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B61.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="B3" Content="B" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="6" Grid.Column="2" Background="{Binding B62.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B62.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="B4" Content="B" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="6" Grid.Column="3" Background="{Binding B63.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B63.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="B5" Content="B" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="6" Grid.Column="4" Background="{Binding B64.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B64.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="B6" Content="B" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="6" Grid.Column="5" Background="{Binding B65.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B65.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="B7" Content="B" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="6" Grid.Column="6" Background="{Binding B66.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B66.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
             <Button x:Name="B8" Content="B" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="6" Grid.Column="7" Background="{Binding B67.BackgroundColor}" Click="Note_Click" >
-                <Button.ContextMenu>
-                    <ContextMenu >
-                        <MenuItem Header="Connected" IsCheckable="True" Click="MenuItem_Checked" IsChecked="{Binding B67.Connected, UpdateSourceTrigger=PropertyChanged}"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
+
             </Button>
         </Grid>
     </Grid>

@@ -31,12 +31,30 @@
         </TabControl>
         <UserControls:PageSelector Grid.Column="2" Grid.Row="1"/>
         <UserControls:OctaveSelector Grid.Row="1"/>
-        
-        <Button Grid.Column="1" Content="Play Chords" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Command="{Binding PlayChordsCommand}" Height="28" Width="74" Margin="124,0,0,0" />
+
+        <Label Grid.Column="1" Content="{Binding SelectedButton, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <CheckBox Grid.Column="1" Content="Note Held?" HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="{Binding ButtonSelected, UpdateSourceTrigger=PropertyChanged}" IsChecked="{Binding SelectedButtonConnected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        <CheckBox Grid.Column="1" Content="Note Activated?" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30,0,0,0" IsEnabled="{Binding ButtonSelected, UpdateSourceTrigger=PropertyChanged}" IsChecked="{Binding SelectedButtonActive, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        <Label Grid.Column="1" Content="{Binding NoteVolume, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,40,50" IsEnabled="{Binding ButtonSelected, UpdateSourceTrigger=PropertyChanged}"/>
+        <Slider Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,30,0" Maximum="1000" Width="100" TickPlacement="BottomRight" TickFrequency="100" IsSnapToTickEnabled="True" ValueChanged="VolumeChanged" IsEnabled="{Binding ButtonSelected, UpdateSourceTrigger=PropertyChanged}" Value="{Binding SelectedButtonVolume, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+        <Button Grid.Column="1" Content="Play Chords" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Command="{Binding PlayChordsCommand}" Height="28" Width="74" Margin="124,0,0,0" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}"/>
         <Button Grid.Column="1" Content="Generate" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Command="{Binding GenerateSelectedCommand}" IsEnabled="{Binding NoSongPlaying, UpdateSourceTrigger=PropertyChanged}" Height="28" Width="74" Margin="0,0,124,0" />
-        <Button Grid.Column="1" Content="Play" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Command="{Binding PlayCommand, UpdateSourceTrigger=PropertyChanged}" Height="28" Width="74"/>
+        <Button Grid.Column="1" Content="Play" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Command="{Binding PlayCommand, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding SongAvailable, UpdateSourceTrigger=PropertyChanged}" Height="28" Width="74"/>
         
         <Label Grid.Column="2" Content="{Binding CurrentPageNo, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="26"/>
         <Label Content="{Binding CurrentOctaveNo, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20"/>
+
+        <Grid Grid.Row="2" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="2" Content="Export as WAV" HorizontalAlignment="Center" Command="{Binding ExportCommand}" IsEnabled="{Binding SongAvailable, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Content="Enter FileName:" HorizontalAlignment="Center"/>
+            <TextBox Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Text="{Binding ExportFilePath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        </Grid>
+        
     </Grid>
 </Window>

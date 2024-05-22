@@ -50,6 +50,8 @@ namespace NAudioSynth.ViewModel
         public int pageNo = 0;
         public int octaveNo = 0;
 
+        public int[] selectedButtonData = new int[2];
+
         NoteGrid noteGrid = new NoteGrid();
         public RelayCommand PlayCommand => new RelayCommand(execute => PlaySelected(), canExecute => noteGrid.GetCurrentSong() != null);
         public RelayCommand PlayChordsCommand => new RelayCommand(execute => PlayChords(), canExecute=> noSongPlaying);
@@ -729,6 +731,18 @@ namespace NAudioSynth.ViewModel
             }
         }
 
+        private bool songAvailable;
+
+        public bool SongAvailable
+        {
+            get { return songAvailable; }
+            set 
+            { 
+                songAvailable = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private bool sinSelected = true;
         public bool SinSelected
@@ -757,9 +771,100 @@ namespace NAudioSynth.ViewModel
             }
         }
 
+        private bool buttonSelected = false;
+
+        public bool ButtonSelected
+        {
+            get { return buttonSelected; }
+            set 
+            { 
+                buttonSelected = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private string selectedButton = "Selected Button:";
+
+        public string SelectedButton
+        {
+            get { return selectedButton; }
+            set 
+            { 
+                selectedButton = value; 
+                OnPropertyChanged();
+            }
+        }
+
+        private bool selectedButtonActive;
+
+        public bool SelectedButtonActive
+        {
+            get { return selectedButtonActive; }
+            set 
+            { 
+                selectedButtonActive = value;
+                int octavePosition = GetOctavePosition();
+                int notePosition = GetNotePosition();
+                if (selectedButtonActive)
+                {
+                    buttonDetails[selectedButtonData[0]][selectedButtonData[1]].BackgroundColor.Color = Colors.Green;
+                }
+                else
+                {
+                    buttonDetails[selectedButtonData[0]][selectedButtonData[1]].BackgroundColor.Color = Colors.Red;
+                }
+                noteGrid.UpdateButtonsPressed(octavePosition, notePosition, selectedButtonActive, GetActiveTab());
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool selectedButtonConnected;
+
+        public bool SelectedButtonConnected
+        {
+            get { return selectedButtonConnected; }
+            set 
+            { 
+                selectedButtonConnected = value;
+                int octavePosition = GetOctavePosition();
+                int notePosition = GetNotePosition();
+                noteGrid.UpdateButtonConnected(octavePosition, notePosition, SelectedButtonConnected, GetActiveTab());
+                OnPropertyChanged();
+            }
+        }
+
+        private float selectedButtonVolume;
+
+        public float SelectedButtonVolume
+        {
+            get { return selectedButtonVolume; }
+            set 
+            {
+                selectedButtonVolume = value;
+                int octavePosition = GetOctavePosition();
+                int notePosition = GetNotePosition();
+                noteGrid.SetVolume(octavePosition, notePosition, selectedButtonVolume*0.01f, GetActiveTab());
+                OnPropertyChanged();
+            }
+        }
+
+
+        private int GetOctavePosition()
+        {
+            return selectedButtonData[0] + (NoteGrid.availableNoteTypes * octaveNo);
+        }
+        private int GetNotePosition()
+        {
+            return selectedButtonData[1] + (NoteGrid.availableNoteButtons * pageNo);
+        }
+
         private void UpdateActiveButtons()
         {
             //TODO MAKE FUNCTION REFRESH CONNECTED ATTRIBUTE
+            ButtonSelected = false;
+            SelectedButton = "Selected Button:";
             for (int i = 0; i < NoteGrid.availableNoteTypes; i++)
             {
                 for(int j = 0; j < NoteGrid.availableNoteButtons; j++)
@@ -804,6 +909,11 @@ namespace NAudioSynth.ViewModel
             return "None";
         }
 
+        public void VolumeChanged(float newVol)
+        {
+            SelectedButtonVolume = newVol;
+        }
+
         public void NotePressed(Button srcButton)
         {
             if (srcButton != null)
@@ -811,18 +921,21 @@ namespace NAudioSynth.ViewModel
                 int row = Grid.GetRow(srcButton);
                 int column = Grid.GetColumn(srcButton);
 
+                selectedButtonData[0] = row;
+                selectedButtonData[1] = column;
+                if (!ButtonSelected) ButtonSelected = true;
+
+                SelectedButton = "Selected Button: ("+row+","+column+")";
+
                 int OctavePosition = row + (NoteGrid.availableNoteTypes * octaveNo);
                 int NotePosition = column + (NoteGrid.availableNoteButtons * pageNo);
 
-                if (noteGrid.QueryButtonsPressed(OctavePosition, NotePosition, GetActiveTab()))
-                {
-                    buttonDetails[row][column].BackgroundColor.Color = Colors.Red;
-                }
-                else
-                {
-                    buttonDetails[row][column].BackgroundColor.Color = Colors.Green;
-                }
-                noteGrid.SwitchButtonsPressed(OctavePosition, NotePosition, GetActiveTab());
+                //bool isActive = noteGrid.QueryButtonsPressed(OctavePosition, NotePosition, GetActiveTab());
+                //if(isActive) SelectedButtonActive = false;
+                //else SelectedButtonActive = true;
+                SelectedButtonConnected = noteGrid.QueryConnected(OctavePosition, NotePosition, GetActiveTab());
+                SelectedButtonActive = !noteGrid.QueryButtonsPressed(OctavePosition, NotePosition, GetActiveTab());
+                SelectedButtonVolume = noteGrid.QueryVolume(OctavePosition,NotePosition,GetActiveTab()) *100;
             }
         }
 
@@ -865,6 +978,7 @@ namespace NAudioSynth.ViewModel
             NoSongPlaying = false;
             Thread songThread = new Thread(new ThreadStart(PlaySongOnThread));
             songThread.Start();
+            SongAvailable = false;
         }
 
         private void PlaySongOnThread()
@@ -922,24 +1036,24 @@ namespace NAudioSynth.ViewModel
             //WaveFileWriter.CreateWaveFile(tempFile, playlist.ToWaveProvider());
         }
 
-        private NoteDetails FormNote(int noteType, int notePosition, SignalGeneratorType signalType)
+        private NoteDetails FormNote(float gain, int noteType, int notePosition, SignalGeneratorType signalType)
         {
             switch (noteType)
             {
                 case (0):
-                    return new NoteDetails(0.2f, noteGrid.Notes["C" + notePosition], .2f, signalType);
+                    return new NoteDetails(gain, noteGrid.Notes["C" + notePosition], NoteGrid.timePerNote, signalType);
                 case (1):
-                    return new NoteDetails(0.2f, noteGrid.Notes["D" + notePosition], .2f, signalType);
+                    return new NoteDetails(gain, noteGrid.Notes["D" + notePosition], NoteGrid.timePerNote, signalType);
                 case (2):
-                    return new NoteDetails(0.2f, noteGrid.Notes["E" + notePosition], .2f, signalType);
+                    return new NoteDetails(gain, noteGrid.Notes["E" + notePosition], NoteGrid.timePerNote, signalType);
                 case (3):
-                    return new NoteDetails(0.2f, noteGrid.Notes["F" + notePosition], .2f, signalType);
+                    return new NoteDetails(gain, noteGrid.Notes["F" + notePosition], NoteGrid.timePerNote, signalType);
                 case (4):
-                    return new NoteDetails(0.2f, noteGrid.Notes["G" + notePosition], .2f, signalType);
+                    return new NoteDetails(gain, noteGrid.Notes["G" + notePosition], NoteGrid.timePerNote, signalType);
                 case (5):
-                    return new NoteDetails(0.2f, noteGrid.Notes["A" + notePosition], .2f, signalType);
+                    return new NoteDetails(gain, noteGrid.Notes["A" + notePosition], NoteGrid.timePerNote, signalType);
                 case (6):
-                    return new NoteDetails(0.2f, noteGrid.Notes["B" + notePosition], .2f, signalType);
+                    return new NoteDetails(gain, noteGrid.Notes["B" + notePosition], NoteGrid.timePerNote, signalType);
                 default:
                     return new NoteDetails();
             }
@@ -982,7 +1096,7 @@ namespace NAudioSynth.ViewModel
                         if (noteGrid.QueryButtonsPressed(i, j, generatorType.Key))
                         {
                             //generate the note details
-                            NoteDetails note = FormNote(noteType, noteOctave, generatorType.Value);
+                            NoteDetails note = FormNote(noteGrid.QueryVolume(i,j,generatorType.Key),noteType, noteOctave, generatorType.Value);
 
                             //check if the note should be held or tapped
                             bool noteHeld = noteGrid.QueryConnected(i, j, generatorType.Key);
@@ -1013,9 +1127,14 @@ namespace NAudioSynth.ViewModel
                     }
                 }
             }
-            
+
             //add to song
-            if(tracksToCombine.Count>0) noteGrid.SetCurrentSong(noteGrid.CombineTracks(tracksToCombine));
+            if (tracksToCombine.Count > 0)
+            {
+                noteGrid.SetCurrentSong(noteGrid.CombineTracks(tracksToCombine));
+                SongAvailable = true;
+            }
+            
         }
 
         /// <summary>
@@ -1057,7 +1176,7 @@ namespace NAudioSynth.ViewModel
                         }
                         else
                         {
-                            NoteDetails note = FormNote(noteType, notePosition, SignalGeneratorType.Sin);
+                            NoteDetails note = FormNote(0.2f,noteType, notePosition, SignalGeneratorType.Sin);
                             bool nextConnected = noteGrid.QueryConnected(j, i, "Sin");
                             if(nextConnected)
                             {
@@ -1077,7 +1196,7 @@ namespace NAudioSynth.ViewModel
                     }
                     if(noteGrid.QueryButtonsPressed(j,i,"Saw"))
                     {
-                        notesToPlay.Add(FormNote(noteType, notePosition, SignalGeneratorType.SawTooth));
+                        notesToPlay.Add(FormNote(0.2f,noteType, notePosition, SignalGeneratorType.SawTooth));
                     }
                 }
                 if (notesToPlay.Count > 0)
