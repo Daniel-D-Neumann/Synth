@@ -963,54 +963,57 @@ namespace NAudioSynth.ViewModel
             }
 
             List<ISampleProvider> tracksToCombine = new List<ISampleProvider>();
-
-            //loop through available note types C-B octaves 0-5
-            for(int i = 0; i<NoteGrid.totalNoteTypes; i++)
+            foreach (KeyValuePair<string,SignalGeneratorType> generatorType in noteGrid.generatorTypes)
             {
-                //Create a track for each note type
-                List<ISampleProvider> notesToPlay = new List<ISampleProvider>(); ;
-
-                //loop through available note positions until the last note to be played is reached
-                for (int j = 0; j < latestNote + 1; j++)
+                //loop through available note types C-B octaves 0-5
+                for (int i = 0; i < NoteGrid.totalNoteTypes; i++)
                 {
+                    //Create a track for each note type
+                    List<ISampleProvider> notesToPlay = new List<ISampleProvider>(); ;
 
-                    //determine which note and at what octave it should be played at
-                    int noteType = i % NoteGrid.availableNoteTypes;
-                    int noteOctave = i / NoteGrid.availableNoteTypes;
-                    //check if note needs to be played
-                    if (noteGrid.QueryButtonsPressed(i, j, "Sin"))
+                    //loop through available note positions until the last note to be played is reached
+                    for (int j = 0; j < latestNote + 1; j++)
                     {
-                        //generate the note details
-                        NoteDetails note = FormNote(noteType, noteOctave, SignalGeneratorType.Sin);
 
-                        //check if the note should be held or tapped
-                        bool noteHeld = noteGrid.QueryConnected(i, j, "Sin");
-                        //keep incrementing along until reaching a note that shouldn't be connected
-                        while (noteHeld && j< NoteGrid.totalNotes)
+                        //determine which note and at what octave it should be played at
+                        int noteType = i % NoteGrid.availableNoteTypes;
+                        int noteOctave = i / NoteGrid.availableNoteTypes;
+                        //check if note needs to be played
+                        if (noteGrid.QueryButtonsPressed(i, j, generatorType.Key))
                         {
-                            j++;
-                            //extend the current note
-                            note.time += NoteGrid.timePerNote;
-                            noteHeld = noteGrid.QueryConnected(i, j, "Sin");
-                            //if the next note shouldn't be connected we still need to perform the other logic on it so decrement the loop counter
-                            if (!noteHeld) j--;
-                        }
+                            //generate the note details
+                            NoteDetails note = FormNote(noteType, noteOctave, generatorType.Value);
 
-                        //add note to track
-                        notesToPlay.Add(noteGrid.GenNote(note));
+                            //check if the note should be held or tapped
+                            bool noteHeld = noteGrid.QueryConnected(i, j, generatorType.Key);
+                            //keep incrementing along until reaching a note that shouldn't be connected
+                            while (noteHeld && j < NoteGrid.totalNotes)
+                            {
+                                j++;
+                                //extend the current note
+                                note.time += NoteGrid.timePerNote;
+                                noteHeld = noteGrid.QueryConnected(i, j, generatorType.Key);
+                                //if the next note shouldn't be connected we still need to perform the other logic on it so decrement the loop counter
+                                if (!noteHeld) j--;
+                            }
+
+                            //add note to track
+                            notesToPlay.Add(noteGrid.GenNote(note));
+                        }
+                        else
+                        {
+                            //add silence to track
+                            notesToPlay.Add(noteGrid.GenSilence(NoteGrid.timePerNote));
+                        }
                     }
-                    else
+                    //combine notes into track
+                    if (notesToPlay.Count > 0)
                     {
-                        //add silence to track
-                        notesToPlay.Add(noteGrid.GenSilence(NoteGrid.timePerNote));
+                        tracksToCombine.Add(noteGrid.ConcatenateNotes(notesToPlay));
                     }
-                }
-                //combine notes into track
-                if(notesToPlay.Count>0)
-                {
-                    tracksToCombine.Add(noteGrid.ConcatenateNotes(notesToPlay));
                 }
             }
+            
             //add to song
             if(tracksToCombine.Count>0) noteGrid.SetCurrentSong(noteGrid.CombineTracks(tracksToCombine));
         }

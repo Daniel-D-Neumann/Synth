@@ -34,6 +34,7 @@ namespace NAudioSynth.Model.NoteGrid
         public const int availableOctaves = 6;
         public const int totalNotes = availableNoteButtons * availablePages;
         public const int totalNoteTypes = availableNoteTypes * availableOctaves;
+        public const int availableGeneratorTypes = 2;
         public const float timePerNote = 0.2f;
         public bool songPlaying = false;
         ISampleProvider? currentSong;
@@ -61,6 +62,11 @@ namespace NAudioSynth.Model.NoteGrid
         NoteDetails[,] buttonsPressedSin = new NoteDetails[totalNoteTypes, totalNotes];
 
         NoteDetails[,] buttonsPressedSaw = new NoteDetails[totalNoteTypes, totalNotes];
+
+        public Dictionary<string,SignalGeneratorType> generatorTypes = new Dictionary<string, SignalGeneratorType> {
+            {"Sin",SignalGeneratorType.Sin},
+            {"Saw", SignalGeneratorType.SawTooth },
+        };
 
         public void UpdateButtonsPressed(int row, int column, bool changeTo, string type)
         {
