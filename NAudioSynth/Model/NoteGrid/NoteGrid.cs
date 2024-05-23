@@ -62,6 +62,15 @@ namespace NAudioSynth.Model.NoteGrid
 
         NoteDetails[,] buttonsPressedSaw = new NoteDetails[totalNoteTypes, totalNotes];
 
+        NoteDetails[,] buttonsPressedSquare = new NoteDetails[totalNoteTypes, totalNotes];
+
+        NoteDetails[,] buttonsPressedWhite = new NoteDetails[totalNoteTypes, totalNotes];
+
+        NoteDetails[,] buttonsPressedPink = new NoteDetails[totalNoteTypes, totalNotes];
+
+        NoteDetails[,] buttonsPressedTriangle = new NoteDetails[totalNoteTypes, totalNotes];
+
+
         public NoteGrid()
         {
             for (int i = 0; i < totalNoteTypes; i++)
@@ -70,63 +79,70 @@ namespace NAudioSynth.Model.NoteGrid
                 {
                     buttonsPressedSin[i, j].gain = 1f;
                     buttonsPressedSaw[i, j].gain = 1f;
+                    buttonsPressedSquare[i, j].gain = 1f;
+                    buttonsPressedTriangle[i, j].gain = 1f;
+                    buttonsPressedPink[i, j].gain = 1f;
+                    buttonsPressedWhite[i, j].gain = 1f;
                 }
             }
+
+            generatorLists.Add("Sin", buttonsPressedSin);
+            generatorLists.Add("Saw", buttonsPressedSaw);
+            generatorLists.Add("Square", buttonsPressedSquare);
+            generatorLists.Add("White", buttonsPressedWhite);
+            generatorLists.Add("Pink", buttonsPressedPink);
+            generatorLists.Add("Triangle", buttonsPressedTriangle); 
+
         }
 
         public Dictionary<string,SignalGeneratorType> generatorTypes = new Dictionary<string, SignalGeneratorType> {
             {"Sin",SignalGeneratorType.Sin},
             {"Saw", SignalGeneratorType.SawTooth },
+            {"Square", SignalGeneratorType.Square },
+            {"White", SignalGeneratorType.White },
+            {"Pink", SignalGeneratorType.Pink },
+            {"Triangle", SignalGeneratorType.Triangle },
         };
+
+        private Dictionary<string, NoteDetails[,]> generatorLists = new Dictionary<string, NoteDetails[,]>();
 
         public void UpdateButtonsPressed(int row, int column, bool changeTo, string type)
         {
-            if(type == "Sin") buttonsPressedSin[row,column].active = changeTo;
-            else if (type == "Saw") buttonsPressedSaw[row,column].active = changeTo;
+            generatorLists[type][row,column].active = changeTo;
         }
         public void SwitchButtonsPressed(int row, int column, string type)
         {
-            if (type == "Sin") buttonsPressedSin[row, column].active = !buttonsPressedSin[row, column].active;
-            else if (type =="Saw") buttonsPressedSaw[row, column].active = !buttonsPressedSaw[row, column].active;
+            generatorLists[type][row, column].active = !generatorLists[type][row, column].active;
         }
 
         public bool QueryButtonsPressed(int row, int column, string type)
         {
-            if (type == "Sin") return buttonsPressedSin[row, column].active;
-            else if (type == "Saw") return buttonsPressedSaw[row, column].active;
-            return false;
+            return generatorLists[type][row, column].active;
         }
 
         public void UpdateButtonConnected(int row, int column, bool changeTo, string type)
         {
-            if (type == "Sin") buttonsPressedSin[row, column].connected = changeTo;
-            else if (type == "Saw") buttonsPressedSaw[row, column].connected = changeTo;
+            generatorLists[type][row, column].connected = changeTo;
         }
 
         public void SwitchConnectedProperty(int row, int column, string type)
         {
-            if (type == "Sin") buttonsPressedSin[row, column].connected = !buttonsPressedSin[row, column].connected;
-            else if (type == "Saw") buttonsPressedSaw[row, column].connected = !buttonsPressedSaw[row, column].connected;
+            generatorLists[type][row, column].connected = !generatorLists[type][row, column].connected;
         }
 
         public bool QueryConnected(int row, int column, string type)
         {
-            if (type == "Sin") return buttonsPressedSin[row, column].connected;
-            else if (type == "Saw") return buttonsPressedSaw[row, column].connected;
-            return false;
+            return generatorLists[type][row, column].connected;
         }
 
         public float QueryVolume(int row, int column, string type)
         {
-            if(type == "Sin") return buttonsPressedSin[row,column].gain;
-            else if(type == "Saw") return buttonsPressedSaw[row,column].gain;
-            return 0f;
+            return generatorLists[type][row, column].gain;
         }
 
         public void SetVolume(int row, int column, float volume, string type)
         {
-            if(type == "Sin") buttonsPressedSin[row,column].gain = volume;
-            else if (type == "Saw") buttonsPressedSaw[row, column].gain = volume;
+            generatorLists[type][row, column].gain = volume;
         }
 
         public ISampleProvider GenNote(float gain, float frequency, float time, SignalGeneratorType type)

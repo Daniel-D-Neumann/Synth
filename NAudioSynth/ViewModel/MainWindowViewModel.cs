@@ -56,7 +56,6 @@ namespace NAudioSynth.ViewModel
 
         NoteGrid noteGrid = new NoteGrid();
         public RelayCommand PlayCommand => new RelayCommand(execute => PlaySelected(), canExecute => noteGrid.GetCurrentSong() != null);
-        public RelayCommand PlayChordsCommand => new RelayCommand(execute => PlayChords(), canExecute=> noSongPlaying);
 
         public RelayCommand GenerateSelectedCommand => new RelayCommand(execute => GenSelected());
 
@@ -749,15 +748,22 @@ namespace NAudioSynth.ViewModel
             }
         }
 
+        private void DeactiveTabs()
+        {
+            sinSelected = false;
+            sawSelected = false;
+            squareSelected = false;
+
+        }
 
         private bool sinSelected = true;
         public bool SinSelected
         {
             get { return sinSelected; }
             set 
-            { 
+            {
+                if(value == true) DeactiveTabs();
                 sinSelected = value;
-                sawSelected = !sinSelected;
                 OnPropertyChanged();
                 UpdateActiveButtons();
             }
@@ -769,9 +775,60 @@ namespace NAudioSynth.ViewModel
             get { return sawSelected; }
             set
             {
-
+                if (value == true) DeactiveTabs();
                 sawSelected = value;
-                sinSelected = !sawSelected;
+                OnPropertyChanged();
+                UpdateActiveButtons();
+            }
+        }
+
+        private bool squareSelected;
+        public bool SquareSelected
+        {
+            get { return squareSelected; }
+            set
+            {
+                if (value == true) DeactiveTabs();
+                squareSelected = value;
+                OnPropertyChanged();
+                UpdateActiveButtons();
+            }
+        }
+
+        private bool triangleSelected;
+        public bool TriangleSelected
+        {
+            get { return triangleSelected; }
+            set
+            {
+                if (value == true) DeactiveTabs();
+                triangleSelected = value;
+                OnPropertyChanged();
+                UpdateActiveButtons();
+            }
+        }
+
+        private bool whiteSelected;
+        public bool WhiteSelected
+        {
+            get { return whiteSelected; }
+            set
+            {
+                if (value == true) DeactiveTabs();
+                whiteSelected = value;
+                OnPropertyChanged();
+                UpdateActiveButtons();
+            }
+        }
+
+        private bool pinkSelected;
+        public bool PinkSelected
+        {
+            get { return pinkSelected; }
+            set
+            {
+                if (value == true) DeactiveTabs();
+                pinkSelected = value;
                 OnPropertyChanged();
                 UpdateActiveButtons();
             }
@@ -851,7 +908,18 @@ namespace NAudioSynth.ViewModel
                 selectedButtonVolume = value;
                 int octavePosition = GetOctavePosition();
                 int notePosition = GetNotePosition();
-                noteGrid.SetVolume(octavePosition, notePosition, selectedButtonVolume*0.01f, GetActiveTab());
+                noteGrid.SetVolume(octavePosition, notePosition, selectedButtonVolume*0.1f, GetActiveTab());
+                OnPropertyChanged();
+            }
+        }
+
+        private string noteVolume = "Note Volume:";
+        public string NoteVolume
+        {
+            get { return noteVolume; }
+            set
+            {
+                noteVolume = value;
                 OnPropertyChanged();
             }
         }
@@ -899,16 +967,20 @@ namespace NAudioSynth.ViewModel
                 {
                     bool buttonPressed = false;
                     bool connectedPressed = false;
-                    if(SinSelected)
-                    {
+                    //if(SinSelected)
+                    //{
                         buttonPressed = noteGrid.QueryButtonsPressed(i+(octaveNo*NoteGrid.availableNoteTypes), j+(pageNo*NoteGrid.availableNoteButtons), GetActiveTab());
                         connectedPressed = noteGrid.QueryConnected(i + (octaveNo * NoteGrid.availableNoteTypes), j + (pageNo * NoteGrid.availableNoteButtons), GetActiveTab());
-                    }
-                    else if (sawSelected)
-                    {
-                        buttonPressed = noteGrid.QueryButtonsPressed(i + (octaveNo * NoteGrid.availableNoteTypes), j + (pageNo * NoteGrid.availableNoteButtons), GetActiveTab());
-                        connectedPressed = noteGrid.QueryConnected(i + (octaveNo * NoteGrid.availableNoteTypes), j + (pageNo * NoteGrid.availableNoteButtons), GetActiveTab());
-                    }
+                    //}
+                    //else if (sawSelected)
+                    //{
+                        //buttonPressed = noteGrid.QueryButtonsPressed(i + (octaveNo * NoteGrid.availableNoteTypes), j + (pageNo * NoteGrid.availableNoteButtons), GetActiveTab());
+                        //connectedPressed = noteGrid.QueryConnected(i + (octaveNo * NoteGrid.availableNoteTypes), j + (pageNo * NoteGrid.availableNoteButtons), GetActiveTab());
+                    //}
+                    //else if (squareSelected)
+                    //{
+
+                    //}
                     if (buttonPressed)
                     {
                         buttonDetails[i][j].BackgroundColor.Color = Colors.Green;
@@ -934,12 +1006,17 @@ namespace NAudioSynth.ViewModel
         {
             if (sinSelected) return "Sin";
             else if (sawSelected) return "Saw";
+            else if (squareSelected) return "Square";
+            else if (triangleSelected) return "Triangle";
+            else if (whiteSelected) return "White";
+            else if (pinkSelected) return "Pink";
             return "None";
         }
 
         public void VolumeChanged(float newVol)
         {
             SelectedButtonVolume = newVol;
+            NoteVolume = "Note Volume: " + newVol*0.1;
         }
 
         public void NotePressed(Button srcButton)
@@ -963,7 +1040,8 @@ namespace NAudioSynth.ViewModel
                 //else SelectedButtonActive = true;
                 SelectedButtonConnected = noteGrid.QueryConnected(OctavePosition, NotePosition, GetActiveTab());
                 SelectedButtonActive = !noteGrid.QueryButtonsPressed(OctavePosition, NotePosition, GetActiveTab());
-                SelectedButtonVolume = noteGrid.QueryVolume(OctavePosition,NotePosition,GetActiveTab()) *100;
+                SelectedButtonVolume = noteGrid.QueryVolume(OctavePosition,NotePosition,GetActiveTab()) *10;
+                NoteVolume = "Note Volume: " + selectedButtonVolume*0.1;
             }
         }
 
@@ -1028,42 +1106,6 @@ namespace NAudioSynth.ViewModel
             NoSongPlaying = true;
         }
 
-        private void PlayChords()
-        {
-            NoteDetails myC = new NoteDetails(0.1f, noteGrid.Notes["C4"], 1.5f, SignalGeneratorType.Sin);
-            NoteDetails myE = new NoteDetails(0.1f, noteGrid.Notes["E4"], 1.5f, SignalGeneratorType.Sin);
-            NoteDetails myE3 = new NoteDetails(0.1f, noteGrid.Notes["E3"], 1.5f, SignalGeneratorType.Sin);
-            NoteDetails myG = new NoteDetails(0.1f, noteGrid.Notes["G4"], 1.5f, SignalGeneratorType.Sin);
-            var concat = noteGrid.CombineNotes(new NoteDetails[] { myC, myE, myG });
-            var concat2 = noteGrid.CombineNotes(new NoteDetails[] { myC, myE3, myG });
-
-            var silence = new SilenceProvider(WaveFormat.CreateIeeeFloatWaveFormat(44100, 1)).ToSampleProvider().Take(TimeSpan.FromSeconds(0.5));
-
-            var playlist = new ConcatenatingSampleProvider(new[] { concat, silence, concat2 });
-            //var concat = CreateMetronome(5, 0.1f,D3,0.2f);
-            //https://stackoverflow.com/questions/65726394/playing-waveform-with-naudio-lower-for-each-turn
-            //https://github.com/naudio/NAudio/issues/373
-
-            //TRY THIS TO FIX CUT SOUND
-            //https://mark-dot-net.blogspot.com/2009/10/playback-of-sine-wave-in-naudio.html
-
-            using (var wo = new WaveOutEvent())
-            {
-                wo.Init(playlist);
-                wo.Play();
-                while (wo.PlaybackState == PlaybackState.Playing)
-                {
-                    Thread.Sleep(500);
-                }
-            }
-            //
-            //var wout = new WaveOutEvent();
-            //wout.Init(playlist);
-            //string tempFile = "C:\\Users\\m015290m\\Documents\\GitHub\\Synth\\NAudioSynth\\Output\\out.wav";
-            //WaveFormat waveFormat = playlist.WaveFormat;
-            //WaveFileWriter.CreateWaveFile(tempFile, playlist.ToWaveProvider());
-        }
-
         private NoteDetails FormNote(float gain, int noteType, int notePosition, SignalGeneratorType signalType)
         {
             switch (noteType)
@@ -1096,7 +1138,7 @@ namespace NAudioSynth.ViewModel
             {
                 for (int cols = (NoteGrid.totalNotes) - 1; cols >= latestNote; cols--)
                 {
-                    if (noteGrid.QueryButtonsPressed(rows, cols, "Sin") || noteGrid.QueryButtonsPressed(rows, cols, "Saw"))
+                    if (noteGrid.QueryButtonsPressed(rows, cols, "Sin") || noteGrid.QueryButtonsPressed(rows, cols, "Saw") || noteGrid.QueryButtonsPressed(rows,cols,"Square") || noteGrid.QueryButtonsPressed(rows, cols, "Triangle") || noteGrid.QueryButtonsPressed(rows, cols, "Pink") || noteGrid.QueryButtonsPressed(rows, cols, "White"))
                     {
                         latestNote = cols;
                         break;
@@ -1164,81 +1206,6 @@ namespace NAudioSynth.ViewModel
             }
             
         }
-
-        /// <summary>
-        /// ///////////////////////////////////////////////////////////////////////////////////////
-        /// </summary>
-
-        //private void GenerateSelected()
-        //{
-        //    int latestNote = 0;
-        //    for (int rows = 0; rows < NoteGrid.totalNoteTypes; rows++)
-        //    {
-        //        for (int cols = (NoteGrid.totalNotes) - 1; cols >= latestNote; cols--)
-        //        {
-        //            if (noteGrid.QueryButtonsPressed(rows, cols, "Sin") || noteGrid.QueryButtonsPressed(rows, cols, "Saw"))
-        //            {
-        //                latestNote = cols;
-        //                break;
-        //            }
-        //        }
-        //    }
-
-        //    List<ISampleProvider> song = new List<ISampleProvider>();
-
-        //    bool lastSinConnected = false;
-        //    bool lastSawConnected = false;
-        //    for (int i = 0; i < latestNote+1; i++)
-        //    {
-        //        List<NoteDetails> notesToPlay = new List<NoteDetails>();
-
-        //        for (int j = 0; j < NoteGrid.totalNoteTypes; j++)
-        //        {
-        //            int noteType = j % NoteGrid.availableNoteTypes;
-        //            int notePosition = j / NoteGrid.availableNoteTypes;
-        //            if (noteGrid.QueryButtonsPressed(j, i, "Sin"))
-        //            {
-        //                if(lastSinConnected)
-        //                {
-        //                    lastSinConnected = noteGrid.QueryConnected(j, i-1, "Sin");
-        //                }
-        //                else
-        //                {
-        //                    NoteDetails note = FormNote(0.2f,noteType, notePosition, SignalGeneratorType.Sin);
-        //                    bool nextConnected = noteGrid.QueryConnected(j, i, "Sin");
-        //                    if(nextConnected)
-        //                    {
-        //                        lastSinConnected= true;
-        //                        int inc = 1;
-        //                        while (nextConnected)
-        //                        {
-        //                            note.time += 0.2f;
-        //                            nextConnected = noteGrid.QueryConnected(j, i + inc, "Sin");
-        //                            inc++;
-        //                        }
-        //                    }
-
-        //                    notesToPlay.Add(note);
-        //                }
-
-        //            }
-        //            if(noteGrid.QueryButtonsPressed(j,i,"Saw"))
-        //            {
-        //                notesToPlay.Add(FormNote(0.2f,noteType, notePosition, SignalGeneratorType.SawTooth));
-        //            }
-        //        }
-        //        if (notesToPlay.Count > 0)
-        //        {
-        //            //NoteDetails[] notesToPlayArr = notesToPlay.ToArray();
-        //            song.Add(noteGrid.CombineNotes(notesToPlay));
-        //        }
-        //        else
-        //        {
-        //            song.Add(noteGrid.GenSilence(.2f));
-        //        }
-        //    }
-        //    noteGrid.SetCurrentSong(new ConcatenatingSampleProvider(song));
-        //}
 
         private void ExportWAV()
         {

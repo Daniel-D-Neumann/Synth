@@ -1,11 +1,3 @@
-remake buttons so that they are more UI friendly, little squares or circles?
-
-Stop button so the user can stop the song when they wish
-pages follow along while the music happens
-
-ADD MORE GENERATOR TYPES
-
-MAYBE LOOK INTO CODEC TO EXPORT MP4
-
-Tooltips for shit?
 README INSTEAD?!
+
+Reflection
