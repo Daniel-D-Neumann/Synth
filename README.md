@@ -42,5 +42,7 @@
 - If the filename provided for your output is invalid the program will prompt you with what is wrong with it
 - If you have not pressed the generate button you will not be able to export
 
+![image](https://github.com/Daniel-D-Neumann/Synth/assets/115144777/f498ddfb-b493-4e24-9789-071d3818efff)
+
 ##
 Enjoy! ☺
