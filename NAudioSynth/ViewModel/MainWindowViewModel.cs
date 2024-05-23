@@ -17,6 +17,7 @@ using System.Text.RegularExpressions;
 
 namespace NAudioSynth.ViewModel
 {
+    //details relating to each note
     public class ButtonDetails
     {
         SolidColorBrush backgroundColor;
@@ -52,9 +53,13 @@ namespace NAudioSynth.ViewModel
         public int pageNo = 0;
         public int octaveNo = 0;
 
+        //position of the selcted button on the grid
         public int[] selectedButtonData = new int[2];
 
+        //ref to model
         NoteGrid noteGrid = new NoteGrid();
+
+        //commands for UI button bindings
         public RelayCommand PlayCommand => new RelayCommand(execute => PlaySelected(), canExecute => noteGrid.GetCurrentSong() != null);
 
         public RelayCommand GenerateSelectedCommand => new RelayCommand(execute => GenSelected());
@@ -65,8 +70,10 @@ namespace NAudioSynth.ViewModel
         public int buttonPressedColumn;
         public List<List<ButtonDetails>> buttonDetails;
 
+        //Regex match for filename validation
         private string filePathRegex = @"^[\w\-. ]+$";
 
+        //The bindings for each button on the grid
         #region ButtonProperties
         private ButtonDetails b00 = new ButtonDetails(new SolidColorBrush(Colors.Red), false);
 
@@ -686,6 +693,7 @@ namespace NAudioSynth.ViewModel
         }
         #endregion
 
+        //The grid of button bindings
         public MainWindowViewModel()
         {
             buttonDetails = new List<List<ButtonDetails>>
@@ -700,6 +708,7 @@ namespace NAudioSynth.ViewModel
             };
         }
 
+        //various bindings for UI elements
         private string currentPageNo = "Page: 1";
 
         public string CurrentPageNo
@@ -956,31 +965,19 @@ namespace NAudioSynth.ViewModel
             return selectedButtonData[1] + (NoteGrid.availableNoteButtons * pageNo);
         }
 
+        //refreshes what buttons are active based on the current page octave and generator tab selected
         private void UpdateActiveButtons()
         {
-            //TODO MAKE FUNCTION REFRESH CONNECTED ATTRIBUTE
             ButtonSelected = false;
             SelectedButton = "Selected Button:";
             for (int i = 0; i < NoteGrid.availableNoteTypes; i++)
             {
                 for(int j = 0; j < NoteGrid.availableNoteButtons; j++)
                 {
-                    bool buttonPressed = false;
-                    bool connectedPressed = false;
-                    //if(SinSelected)
-                    //{
-                        buttonPressed = noteGrid.QueryButtonsPressed(i+(octaveNo*NoteGrid.availableNoteTypes), j+(pageNo*NoteGrid.availableNoteButtons), GetActiveTab());
-                        connectedPressed = noteGrid.QueryConnected(i + (octaveNo * NoteGrid.availableNoteTypes), j + (pageNo * NoteGrid.availableNoteButtons), GetActiveTab());
-                    //}
-                    //else if (sawSelected)
-                    //{
-                        //buttonPressed = noteGrid.QueryButtonsPressed(i + (octaveNo * NoteGrid.availableNoteTypes), j + (pageNo * NoteGrid.availableNoteButtons), GetActiveTab());
-                        //connectedPressed = noteGrid.QueryConnected(i + (octaveNo * NoteGrid.availableNoteTypes), j + (pageNo * NoteGrid.availableNoteButtons), GetActiveTab());
-                    //}
-                    //else if (squareSelected)
-                    //{
 
-                    //}
+                    bool buttonPressed = buttonPressed = noteGrid.QueryButtonsPressed(i+(octaveNo*NoteGrid.availableNoteTypes), j+(pageNo*NoteGrid.availableNoteButtons), GetActiveTab());
+                    bool connectedPressed = connectedPressed = noteGrid.QueryConnected(i + (octaveNo * NoteGrid.availableNoteTypes), j + (pageNo * NoteGrid.availableNoteButtons), GetActiveTab());
+
                     if (buttonPressed)
                     {
                         buttonDetails[i][j].BackgroundColor.Color = Colors.Green;
@@ -1019,10 +1016,12 @@ namespace NAudioSynth.ViewModel
             NoteVolume = "Note Volume: " + newVol*0.1;
         }
 
+        //what happens when a note button is pressed
         public void NotePressed(Button srcButton)
         {
             if (srcButton != null)
             {
+                //where is button on the grid
                 int row = Grid.GetRow(srcButton);
                 int column = Grid.GetColumn(srcButton);
 
@@ -1035,9 +1034,7 @@ namespace NAudioSynth.ViewModel
                 int OctavePosition = row + (NoteGrid.availableNoteTypes * octaveNo);
                 int NotePosition = column + (NoteGrid.availableNoteButtons * pageNo);
 
-                //bool isActive = noteGrid.QueryButtonsPressed(OctavePosition, NotePosition, GetActiveTab());
-                //if(isActive) SelectedButtonActive = false;
-                //else SelectedButtonActive = true;
+                //set the properties of the button for the UI
                 SelectedButtonConnected = noteGrid.QueryConnected(OctavePosition, NotePosition, GetActiveTab());
                 SelectedButtonActive = !noteGrid.QueryButtonsPressed(OctavePosition, NotePosition, GetActiveTab());
                 SelectedButtonVolume = noteGrid.QueryVolume(OctavePosition,NotePosition,GetActiveTab()) *10;
@@ -1045,6 +1042,7 @@ namespace NAudioSynth.ViewModel
             }
         }
 
+        //What happens when the Note Connected? UI is pressed
         public void ConnectedPressed(Button srcButton)
         {
             int row = Grid.GetRow(srcButton);
@@ -1057,6 +1055,7 @@ namespace NAudioSynth.ViewModel
             buttonDetails[row][column].Connected = !buttonDetails[row][column].Connected;
         }
 
+        //switches page to button pressed
         public void SelectPage(Button srcButton)
         {
             int row = Grid.GetRow(srcButton);
@@ -1064,12 +1063,9 @@ namespace NAudioSynth.ViewModel
             pageNo = (3*row) + col;
             CurrentPageNo = "Page: ";
             UpdateActiveButtons();
-            //refresh buttons
-            //make button background a Binding
-            //when changing page number query the grid for the page and position
-            //and change those bindings based on the queries
         }
 
+        //switches page to octave pressed
         public void SelectOctave(Button srcButton)
         {
             int row = Grid.GetRow(srcButton);
@@ -1077,8 +1073,9 @@ namespace NAudioSynth.ViewModel
             octaveNo = (2*row) + col;
             CurrentOctaveNo = "Octave: ";
             UpdateActiveButtons();
-
         }
+
+        //Starts the thread to play the generated song
         private void PlaySelected()
         {
             NoSongPlaying = false;
@@ -1087,6 +1084,7 @@ namespace NAudioSynth.ViewModel
             SongAvailable = false;
         }
 
+        //Plays the currently generated song as long as it exists
         private void PlaySongOnThread()
         {
             if (noteGrid.GetCurrentSong() != null)
@@ -1106,6 +1104,7 @@ namespace NAudioSynth.ViewModel
             NoSongPlaying = true;
         }
 
+        //Generate a note based on its position in the grid
         private NoteDetails FormNote(float gain, int noteType, int notePosition, SignalGeneratorType signalType)
         {
             switch (noteType)
@@ -1128,11 +1127,11 @@ namespace NAudioSynth.ViewModel
                     return new NoteDetails();
             }
         }
-        //instead of searching down create long concatenation of columns
-        //then mix the longs together
 
+        //Generate the music based on the selected buttons
         private void GenSelected()
         {
+            //find the last note to be played so that the song does not continue past this point
             int latestNote = 0;
             for (int rows = 0; rows < NoteGrid.totalNoteTypes; rows++)
             {
@@ -1147,6 +1146,7 @@ namespace NAudioSynth.ViewModel
             }
 
             List<ISampleProvider> tracksToCombine = new List<ISampleProvider>();
+            //loop through each generator type
             foreach (KeyValuePair<string,SignalGeneratorType> generatorType in noteGrid.generatorTypes)
             {
                 //loop through available note types C-B octaves 0-5
@@ -1207,6 +1207,7 @@ namespace NAudioSynth.ViewModel
             
         }
 
+        //Exports generated song to Output folder
         private void ExportWAV()
         {
             if(!string.IsNullOrEmpty(exportFilePath))

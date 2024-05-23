@@ -2,13 +2,11 @@
 using NAudio.Wave.SampleProviders;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NAudioSynth.Model.NoteGrid
 {
+    //Contains the data needed to generate a Note
     public struct NoteDetails
     {
         public bool active = false;
@@ -28,6 +26,7 @@ namespace NAudioSynth.Model.NoteGrid
     }
     internal class NoteGrid
     {
+        //various consts about the program
         public const int availableNoteTypes = 7;
         public const int availableNoteButtons = 8;
         public const int availablePages = 15;
@@ -36,11 +35,15 @@ namespace NAudioSynth.Model.NoteGrid
         public const int totalNoteTypes = availableNoteTypes * availableOctaves;
         public const int availableGeneratorTypes = 2;
         public const float timePerNote = 0.2f;
+
+        //variables to manipulate the currently generated song
         public bool songPlaying = false;
         ISampleProvider? currentSong;
         public ISampleProvider GetCurrentSong() { return currentSong; }
         public void SetCurrentSong(ISampleProvider song) { currentSong = song; }
         public void ReleaseCurrentSong() { currentSong = null; }
+
+        //notes and their corresponding frequencies
         public Dictionary<string, float> Notes = new Dictionary<string, float>()
         {
         //Anything below 2 should be used for bass only
@@ -58,6 +61,7 @@ namespace NAudioSynth.Model.NoteGrid
          {"B0", 30.87f},  {"B1", 61.74f},  {"B2", 123.47f},  {"B3", 246.94f},   {"B4", 493.88f},  {"B5", 987.77f },
         };
 
+        //the data for each generator contains the note to play in each position of the grid
         NoteDetails[,] buttonsPressedSin = new NoteDetails[totalNoteTypes, totalNotes];
 
         NoteDetails[,] buttonsPressedSaw = new NoteDetails[totalNoteTypes, totalNotes];
@@ -70,9 +74,10 @@ namespace NAudioSynth.Model.NoteGrid
 
         NoteDetails[,] buttonsPressedTriangle = new NoteDetails[totalNoteTypes, totalNotes];
 
-
+        
         public NoteGrid()
         {
+            //inits the volume of all notes to 1 (lowest before 0)
             for (int i = 0; i < totalNoteTypes; i++)
             {
                 for (int j = 0; j < totalNotes; j++)
@@ -86,6 +91,7 @@ namespace NAudioSynth.Model.NoteGrid
                 }
             }
 
+            //populates the dictionary so that these arrays can be accessed easier
             generatorLists.Add("Sin", buttonsPressedSin);
             generatorLists.Add("Saw", buttonsPressedSaw);
             generatorLists.Add("Square", buttonsPressedSquare);
@@ -95,6 +101,7 @@ namespace NAudioSynth.Model.NoteGrid
 
         }
 
+        //Ties a name to a generator type
         public Dictionary<string,SignalGeneratorType> generatorTypes = new Dictionary<string, SignalGeneratorType> {
             {"Sin",SignalGeneratorType.Sin},
             {"Saw", SignalGeneratorType.SawTooth },
@@ -104,8 +111,10 @@ namespace NAudioSynth.Model.NoteGrid
             {"Triangle", SignalGeneratorType.Triangle },
         };
 
+        //Ties a name to the available notes for a generator
         private Dictionary<string, NoteDetails[,]> generatorLists = new Dictionary<string, NoteDetails[,]>();
 
+        //various accessor methods for generator lists
         public void UpdateButtonsPressed(int row, int column, bool changeTo, string type)
         {
             generatorLists[type][row,column].active = changeTo;
@@ -145,6 +154,7 @@ namespace NAudioSynth.Model.NoteGrid
             generatorLists[type][row, column].gain = volume;
         }
 
+        //Generates the data for a note
         public ISampleProvider GenNote(float gain, float frequency, float time, SignalGeneratorType type)
         {
             ISampleProvider note = new SignalGenerator(44100, 1)
@@ -177,26 +187,27 @@ namespace NAudioSynth.Model.NoteGrid
             };
         }
 
+        //generates silence
         public ISampleProvider GenSilence(float time)
         {
             return new SilenceProvider(WaveFormat.CreateIeeeFloatWaveFormat(44100, 1)).ToSampleProvider().Take(TimeSpan.FromSeconds(time));
         }
 
+        //creates a simple metronome that plays a given number of times at a volume and frequency, time determines the length of each metronome sound
         public ISampleProvider CreateMetronome(int length, float gain, float frequency, float time)
         {
             ISampleProvider[] metronomeConcat = new ISampleProvider[length * 2];
-            //ISampleProvider myNote = GenD3();            
             for (int i = 0; i < length; i++)
             {
                 metronomeConcat[i * 2] = GenNote(gain, frequency, time, SignalGeneratorType.Sin);
-                //OffsetSampleProvider
-                metronomeConcat[(i * 2) + 1] = /*GenNote(gain,frequency,time)*/ GenSilence(time);
+                metronomeConcat[(i * 2) + 1] = GenSilence(time);
             }
 
             ISampleProvider metronome = new ConcatenatingSampleProvider(metronomeConcat);
             return metronome;
         }
 
+        //Overlays multiple notes
         public ISampleProvider CombineNotes(NoteDetails[] notes)
         {
             MixingSampleProvider combiner = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(44100, 1));
@@ -227,6 +238,7 @@ namespace NAudioSynth.Model.NoteGrid
             return combiner;
         }
 
+        //Adds multiple notes onto the end of each other
         public ISampleProvider ConcatenateNotes(List<NoteDetails> notes)
         {
             ISampleProvider[] convertedNotes = new ISampleProvider[notes.Count];
